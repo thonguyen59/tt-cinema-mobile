@@ -1,9 +1,9 @@
 import {Text, View} from 'react-native';
 
-function ShowTimeScreen() {
+function PersonalScreen() {
   return (
       <View><Text>HomeScreen</Text></View>
   );
 }
 
-export default ShowTimeScreen
+export default PersonalScreen

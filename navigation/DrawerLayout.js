@@ -1,13 +1,18 @@
-import {createDrawerNavigator} from "@react-navigation/drawer";
-import HomeScreen from "../screens/HomeScreen";
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import BottomTab from './BottomTab';
 
 const Drawer = createDrawerNavigator();
+
 function DrawerLayout() {
-    return(
-        <Drawer.Navigator>
-            <Drawer.Screen name='Home' component={HomeScreen} />
-        </Drawer.Navigator>
-    )
+  return (
+      <Drawer.Navigator
+          initialRouteName="Home"
+          screenOptions={{
+            headerTransparent: true
+          }}>
+        <Drawer.Screen name=' ' component={BottomTab} options={{drawerLabel: 'Home'}}/>
+      </Drawer.Navigator>
+  );
 }
 
-export default DrawerLayout
+export default DrawerLayout;
