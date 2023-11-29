@@ -63,8 +63,8 @@ const styles = StyleSheet.create({
         top: '55%',
         left: '55%',
         transform: [
-            {translateX: -216},
-            {translateY: 250},
+            {translateX: -226},
+            {translateY: 270},
         ],
     },
     btnContainer: {
