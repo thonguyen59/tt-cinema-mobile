@@ -10,8 +10,9 @@ import Animated, {
 import TitleMovie from './TitleMovie';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faHome} from '@fortawesome/free-solid-svg-icons';
+import {useNavigation} from "@react-navigation/native";
 
-const MovieShowingCarousel = ({data, pagination}) => {
+const MovieShowingCarousel = ({data}) => {
   const scrollViewRef = useAnimatedRef(null);
   const interval = useRef();
   const [newData] = useState([
@@ -19,6 +20,7 @@ const MovieShowingCarousel = ({data, pagination}) => {
     ...data,
     {key: 'spacer-right'},
   ]);
+  const navigation = useNavigation();
   const {width} = useWindowDimensions();
   const SIZE = width * 0.7;
   const SPACER = (width - SIZE) / 1.7;
@@ -65,9 +67,13 @@ const MovieShowingCarousel = ({data, pagination}) => {
             }
             return (
                 <View style={{width: SIZE}} key={index}>
-                  <Animated.View style={[styles.imageContainer, style]}>
-                    <Image source={item.image} style={styles.image}/>
-                  </Animated.View>
+                  <TouchableOpacity onPress={() => {
+                    navigation.navigate('movieDetail');
+                  }}>
+                    <Animated.View style={[styles.imageContainer, style]}>
+                      <Image source={item.image} style={styles.image}/>
+                    </Animated.View>
+                  </TouchableOpacity>
                 </View>
             );
           })}
@@ -104,8 +110,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     backgroundColor: '#16cc3c',
     borderRadius: 10,
-    marginTop: 10,
-    paddingVertical: 6,
+    marginTop: 15,
+    paddingVertical: 7,
     width: '50%'
   },
   bookingTxt: {

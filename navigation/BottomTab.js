@@ -7,9 +7,9 @@ import PersonalScreen from '../screens/PersonalScreen';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faHome, faFilm, faStore} from '@fortawesome/free-solid-svg-icons';
 import {faUser} from '@fortawesome/free-regular-svg-icons';
+import MovieDetailScreen from "../screens/MovieDetailScreen";
 
 const Tab = createBottomTabNavigator();
-
 function BottomTab() {
 
   return (
@@ -49,6 +49,8 @@ function BottomTab() {
                           <FontAwesomeIcon icon={faUser} size={22}/>
                       ),
                     }}/>
+
+
 
       </Tab.Navigator>
   );

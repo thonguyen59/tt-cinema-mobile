@@ -2,7 +2,6 @@ import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
 import RotatingBanner from '../components/RotatingBanner';
 import MovieShowingCarousel from "../components/MovieShowingCarousel";
 import React, {useState} from "react";
-import {RadioButtons} from 'react-native-radio-buttons';
 
 function HomeScreen() {
     const [isShowing, setIsShowing] = useState(true)
@@ -72,7 +71,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignSelf: 'center',
         backgroundColor: '#4A4A4A',
-        marginTop: 190,
+        marginTop: 200,
         borderRadius: 10,
         position: 'absolute',
     },

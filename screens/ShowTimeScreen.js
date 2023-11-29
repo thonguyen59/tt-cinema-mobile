@@ -1,9 +1,9 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, Image} from 'react-native';
 
 function ShowTimeScreen() {
   return (
       <View style={styles.container}>
-        <View><Image  style={styles.image}/></View>
+        <View><Image source={'../assets/banners/app.jpg'} style={styles.image}/></View>
         <View><Text>Title</Text></View>
         <View></View>
       </View>
