@@ -8,13 +8,14 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faHome, faFilm, faStore} from '@fortawesome/free-solid-svg-icons';
 import {faUser} from '@fortawesome/free-regular-svg-icons';
 import MovieDetailScreen from "../screens/MovieDetailScreen";
+import StackNavigation from './StackNavigation';
 
 const Tab = createBottomTabNavigator();
 function BottomTab() {
 
   return (
-      <Tab.Navigator>
-        <Tab.Screen name="home" component={HomeScreen}
+      <Tab.Navigator initialRouteName={HomeScreen}>
+        <Tab.Screen name="home" component={StackNavigation}
                     options={{
                       headerShown: false,
                       tabBarLabel: 'HOME',
