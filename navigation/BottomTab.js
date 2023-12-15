@@ -12,17 +12,17 @@ import StackNavigation from './StackNavigation';
 
 const Tab = createBottomTabNavigator();
 function BottomTab() {
-
   return (
-      <Tab.Navigator initialRouteName={HomeScreen}>
-        <Tab.Screen name="home" component={StackNavigation}
+      <Tab.Navigator initialRouteName="home">
+        <Tab.Screen name="home" component={HomeScreen}
                     options={{
                       headerShown: false,
                       tabBarLabel: 'HOME',
                       tabBarIcon: () => (
                           <FontAwesomeIcon icon={faHome} size={26}/>
                       ),
-                    }}/>
+                    }}
+                   />
 
         <Tab.Screen name="showtime" component={ShowTimeScreen}
                     options={{
