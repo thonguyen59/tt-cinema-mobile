@@ -31,20 +31,22 @@ function HomeScreen({navigation}) {
     ];
 
     return (
-        <View>
+        <View style={styles.container}>
             <View><RotatingBanner/></View>
             <View style={styles.btnContainer}>
-                <TouchableOpacity style={[styles.button, isShowing? styles.button_chosen : null]} onPress={selectShowing}>
+                <TouchableOpacity style={[styles.button, isShowing ? styles.button_chosen : null]}
+                                  onPress={selectShowing}>
                     <Text style={styles.buttonText}>Now Showing</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={[styles.button, !isShowing? styles.button_chosen : null]} onPress={selectComing}>
+                <TouchableOpacity style={[styles.button, !isShowing ? styles.button_chosen : null]}
+                                  onPress={selectComing}>
                     <Text style={styles.buttonText}>Coming Soon</Text>
                 </TouchableOpacity>
             </View>
 
 
             {isShowing && <View style={styles.movies}>
-                <MovieShowingCarousel data={data} autoPlay={false} pagination={true}/>
+                <MovieShowingCarousel isShowing={true} data={data} autoPlay={false} pagination={true}/>
             </View>}
 
             {!isShowing && <View style={styles.movies}>
@@ -56,31 +58,26 @@ function HomeScreen({navigation}) {
 }
 
 const styles = StyleSheet.create({
-    movies: {
-        position: 'absolute',
-        textAlign: 'center',
-        alignContent: 'center',
-        top: '55%',
-        left: '55%',
-        transform: [
-            {translateX: -226},
-            {translateY: 270},
-        ],
+    container: {
+        justifyContent: 'flex-start',
+        flex: 1,
+        flexDirection: 'column',
+        backgroundColor: 'black',
     },
     btnContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignSelf: 'center',
         backgroundColor: '#4A4A4A',
-        marginTop: 200,
+        marginTop: 7,
         borderRadius: 10,
-        position: 'absolute',
+        paddingHorizontal: 5
     },
     button: {
-        paddingVertical: 10,
+        paddingVertical: 9,
         paddingHorizontal: 25,
         borderRadius: 10,
-        marginVertical: 5,
+        marginVertical: 4,
     },
     buttonText: {
         color: '#fff',
@@ -89,7 +86,10 @@ const styles = StyleSheet.create({
     },
     button_chosen: {
         backgroundColor: '#282828',
-    }
+    },
+    movies: {
+        marginTop: 10
+    },
 });
 
 export default HomeScreen;

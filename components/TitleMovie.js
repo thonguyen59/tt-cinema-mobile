@@ -12,16 +12,16 @@ function TitleMovie(props) {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop:10,
     flexDirection: 'column', // Display children vertically
     alignItems: 'center', // Center children horizontally
   },
   title: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: 'gray',
   },
   time: {
-    fontSize: 16,
+    fontSize: 15,
     color: 'gray',
   }
 });
