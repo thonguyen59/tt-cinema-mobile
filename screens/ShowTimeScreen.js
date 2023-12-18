@@ -1,34 +1,37 @@
 import {StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, SectionList, FlatList} from 'react-native';
-import {useState} from "react";
+import React, {useState} from "react";
+import CinemaShowtimeDropdown from "../components/CinemaShowtimeDropdown";
 
 function ShowTimeScreen() {
     const [dateSelected, setDateSelected] = useState(1);
     const [locationSelected, setLocationSelected] = useState(1);
 
     const data = [
-        { id: '1', title: 'BHD Star Quang Trung' },
-        { id: '2', title: 'BHD Start Bitexco' },
-        { id: '3', title: 'BHD Star Lê Văn Việt' },
+        { id: '1', title: 'BHD Star Quang Trung', isShowing: false },
+        { id: '2', title: 'BHD Start Bitexco', isShowing: false },
+        { id: '3', title: 'BHD Star Lê Văn Việt', isShowing: false },
+    ];
+
+    const data2 = [
+        {id: 4, time: '01:30'},
+        {id: 5, time: '02:15'},
+        {id: 6, time: '03:00'},
+        {id: 7, time: '04:30'},
+        {id: 8, time: '05:15'},
+        {id: 9, time: '06:00'},
     ];
 
     const handleDateSelection = (date) => {
-        setDateSelected(date);
+        setDateSelected(date)
     };
 
     const handleLocationSelection = (location) => {
         setLocationSelected(location);
     };
 
-    const handleCinemaSelection = (cinema) => {
-        setLocationSelected(cinema);
-    };
-
     const renderShowTime = ({item}) => (
         <View>
-            <TouchableOpacity style={styles.cinema}>
-                <Text style={styles.cinemaText}>{item.title}</Text>
-            </TouchableOpacity>
-
+            <CinemaShowtimeDropdown title={item.title} data={data2}/>
         </View>
     );
 
