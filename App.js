@@ -1,10 +1,11 @@
 import {NavigationContainer} from "@react-navigation/native";
-import DrawerLayout from "./navigation/DrawerLayout";
+import DrawerNavigation from "./navigation/DrawerNavigation";
+import MainNavigation from './navigation/MainNavigation';
 
 export default function App() {
     return (
         <NavigationContainer>
-            <DrawerLayout/>
+            <MainNavigation/>
         </NavigationContainer>
     );
 }

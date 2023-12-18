@@ -30,9 +30,8 @@ function RotatingBanner() {
     ];
 
     return (
-        <View style={{flex: 1}}>
+        <View style={styles.container}>
             <Carousel
-                style={styles.carousel}
                 loop
                 width={width}
                 height={width / 2.2}
@@ -85,17 +84,15 @@ function RotatingBanner() {
 }
 
 const styles = StyleSheet.create({
-    carousel: {
-        position: 'absolute',
+    container: {
+      flex: 0
     },
     dotsCarousel: {
-        position: 'absolute',
-        textAlign: 'center',
-        alignContent: 'center',
         transform: [
             {translateX: 170},
             {translateY: 160},
         ],
+        position: 'absolute'
     },
     imageContainer: {
         justifyContent: 'center',

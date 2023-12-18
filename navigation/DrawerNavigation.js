@@ -1,11 +1,10 @@
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import BottomTab from './BottomTab';
-import MovieDetailScreen from '../screens/MovieDetailScreen';
-import React from 'react';
-import {Entypo, Ionicons} from '@expo/vector-icons';
-import HomeScreen from '../screens/HomeScreen';
 import SignInPage from '../screens/user/SignInPage';
 import SignUpPage from '../screens/user/SignUpPage';
+import React from 'react';
+import Test from "./Draft";
+
 
 const Drawer = createDrawerNavigator();
 
@@ -30,6 +29,11 @@ function DrawerNavigation({navigation}) {
            <Drawer.Screen name="Register" component={SignUpPage}
                            options={{
                                drawerLabel: 'Register',
+                               headerTitle: '',
+                           }}/>
+            <Drawer.Screen name="test" component={Test}
+                           options={{
+                               drawerLabel: 'Test',
                                headerTitle: '',
                            }}/>
         </Drawer.Navigator>
