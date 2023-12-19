@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
 import {faTicket} from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 
-function MovieDetailScreen({ route, navigation }) {
+function MovieDetailScreen({route}) {
     return (
         <View style={styles.container}>
             <Image source={require('../assets/images/Avengers.jpg')} style={styles.trailer}/>

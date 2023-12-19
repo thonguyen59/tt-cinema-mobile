@@ -69,7 +69,7 @@ function ShowTimeScreen() {
             </View>
 
             <View>
-                <ScrollView horizontal={true} style={{marginTop: 30, marginLeft: 12}}>
+                <ScrollView horizontal={true} style={{marginTop: 20, marginLeft: 12}}>
                     <View style={[styles.location, locationSelected === 1 && styles.locationSelected]}>
                         <TouchableOpacity>
                             <Text style={[styles.text, dateSelected === 1 && styles.textSelected]}>TPHCM</Text>
@@ -115,30 +115,30 @@ const styles = StyleSheet.create({
     },
     title: {
         color: 'white',
-        fontSize: 28,
+        fontSize: 25,
         fontWeight: 'bold',
         marginTop: 15,
     },
     text: {
         color: 'rgba(255,255,255,0.67)',
-        fontSize: 22,
+        fontSize: 18,
     },
     textSelected: {
         color: 'white',
-        fontSize: 22,
+        fontSize: 18,
         fontWeight: 'bold'
     },
     date: {
-        width: 55,
-        height: 70,
+        width: 50,
+        height: 60,
         marginRight: 10,
         borderRadius: 5,
         justifyContent: 'center',
         alignItems: 'center',
     },
     dateSelected: {
-        width: 55,
-        height: 70,
+        width: 50,
+        height: 60,
         marginRight: 10,
         borderRadius: 5,
         justifyContent: 'center',
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     },
     location: {
         width: "auto",
-        height: 50,
+        height: 40,
         marginRight: 15,
         borderRadius: 5,
         paddingHorizontal: 15,
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     },
     locationSelected: {
         width: "auto",
-        height: 50,
+        height: 40,
         marginRight: 15,
         borderRadius: 5,
         paddingHorizontal: 15,

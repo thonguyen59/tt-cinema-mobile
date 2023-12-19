@@ -15,10 +15,7 @@ function BottomTab() {
         <Tab.Navigator initialRouteName="home" screenOptions={({route}) => ({
             headerShown: false,
             tabBarStyle: {
-                height: 52,
                 paddingHorizontal: 5,
-                paddingTop: 4,
-                paddingBottom: 5,
                 backgroundColor: 'rgba(34,36,40,1)',
                 borderTopWidth: 0,
             },

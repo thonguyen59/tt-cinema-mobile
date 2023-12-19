@@ -45,11 +45,11 @@ function HomeScreen({navigation}) {
             </View>
 
 
-            {isShowing && <View style={styles.movies}>
+            {isShowing && <View>
                 <MovieShowingCarousel isShowing={true} data={data} autoPlay={false} pagination={true}/>
             </View>}
 
-            {!isShowing && <View style={styles.movies}>
+            {!isShowing && <View>
                 <MovieShowingCarousel data={data} autoPlay={false} pagination={true}/>
             </View>}
 
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignSelf: 'center',
         backgroundColor: '#4A4A4A',
-        marginTop: 7,
+        marginVertical: 12,
         borderRadius: 10,
         paddingHorizontal: 5
     },
@@ -86,9 +86,6 @@ const styles = StyleSheet.create({
     },
     button_chosen: {
         backgroundColor: '#282828',
-    },
-    movies: {
-        marginTop: 10
     },
 });
 

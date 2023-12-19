@@ -53,14 +53,15 @@ const styles = StyleSheet.create({
     },
     cinemaText: {
         color: 'white',
-        fontSize: 20,
+        fontSize: 18,
     },
     dropdown: {
         marginTop: 10,
         flexDirection: 'row',
+        justifyContent: "center"
     },
     item: {
-        padding: 15,
+        padding: 10,
         marginRight: 10,
         backgroundColor: '#4A4A4A',
         borderRadius: 5,

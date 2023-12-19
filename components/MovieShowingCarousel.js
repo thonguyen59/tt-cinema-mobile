@@ -122,13 +122,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#16cc3c',
         borderRadius: 10,
         marginTop: 10,
-        paddingVertical: 7,
-        width: '50%'
+        paddingVertical: 10,
+        width: '55%'
     },
     bookingTxt: {
         marginRight: 5,
         color: 'white',
-        fontSize: 20,
+        fontSize: 16,
         fontWeight: 'bold'
     },
     bookingIcon: {

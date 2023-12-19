@@ -1,11 +1,11 @@
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {CheckBox} from "react-native-elements";
 import {useNavigation} from "@react-navigation/native";
 
 ;
 
-function PaymentProgress() {
+function PaymentProgress({route}) {
     const navigation = useNavigation();
     const [step, setStep] = useState(1)
     const [checked, setChecked] = useState(false);
@@ -15,8 +15,14 @@ function PaymentProgress() {
         console.log(checked)
     };
 
+    useEffect(() => {
+        if (route && route.params.step) {
+            setStep(route.params.step)
+        }
+    }, []);
+
     const toStep2 = () => {
-        navigation.navigate('showTime');
+        navigation.navigate('payment', {movieName: 'The Eras rour'});
     };
 
     return (
@@ -30,7 +36,7 @@ function PaymentProgress() {
                     <Text style={[styles.text, {color: 'white', marginLeft: 'auto'}]}>110,000đ</Text>
                 </View>
                 <TouchableOpacity onPress={toStep2} style={styles.bookingBtn}>
-                    <Text style={styles.bookingTxt}>Finish Payment (1/3)</Text>
+                    <Text style={styles.bookingTxt}>Finish Payment (1/2)</Text>
                 </TouchableOpacity>
             </View>}
 
@@ -41,19 +47,17 @@ function PaymentProgress() {
                         onPress={handleCheckboxToggle}
                     />
 
-                    <Text style={styles.text2}>Tôi đã đọc, hiểu và đồng ý với
-                        <TouchableOpacity>
-                            <Text style={styles.link}>các điều khoản</Text>
-                        </TouchableOpacity>
+                    <Text style={styles.text2}>Tôi đã đọc, hiểu và đồng ý với <Text onPress={handleCheckboxToggle}
+                                                                                    style={styles.link}>các điều
+                        khoản</Text>
                     </Text>
 
-
                 </View>
-                {checked && <TouchableOpacity disabled={true} style={styles.bookingDisableBtn}>
-                        <Text style={styles.bookingTxt}>Finish Payment (1/3)</Text>
+                {!checked && <TouchableOpacity disabled={true} style={styles.bookingDisableBtn}>
+                        <Text style={styles.bookingTxt}>Finish Payment (2/2)</Text>
                     </TouchableOpacity> ||
                     <TouchableOpacity style={styles.bookingBtn}>
-                        <Text style={styles.bookingTxt}>Finish Payment (1/3)</Text>
+                        <Text style={styles.bookingTxt}>Finish Payment (2/2)</Text>
                     </TouchableOpacity>
                 }
             </View>}
@@ -86,7 +90,6 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         paddingVertical: 12,
         width: '100%',
-        marginTop: 10
     },
     bookingDisableBtn: {
         flexDirection: 'row',
@@ -97,7 +100,6 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         paddingVertical: 12,
         width: '100%',
-        marginTop: 10
     },
     bookingTxt: {
         marginRight: 5,
@@ -119,7 +121,7 @@ const styles = StyleSheet.create({
         textDecorationLine: "underline",
         fontSize: 16,
         alignItems: "stretch",
-        width: '20%'
+        marginTop: 5
     },
 
 })

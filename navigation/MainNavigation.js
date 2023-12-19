@@ -6,6 +6,7 @@ import HomeScreen from '../screens/HomeScreen';
 import ShowTimeScreen from "../screens/ShowTimeScreen";
 import SeatsScreen from "../screens/SeatsScreen";
 import CinemaShowtimeDropdown from "../components/CinemaShowtimeDropdown";
+import PaymentScreen from "../screens/PaymentScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +31,12 @@ function MainNavigation() {
                               headerTitleStyle:{color: 'rgba(255,255,255,0.67)'},
                               headerStyle:{backgroundColor:'black'},
                               title: 'Session Selection',
+                          }}/>
+            <Stack.Screen name="payment" component={PaymentScreen}
+                          options={{
+                              headerTitle: null,
+                              headerTransparent: true,
+                              title: ''
                           }}/>
         </Stack.Navigator>
     );

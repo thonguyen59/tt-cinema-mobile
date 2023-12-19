@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import {View, Text, TouchableOpacity, FlatList, StyleSheet} from 'react-native';
-import PaymentProgress from "../components/PaymentProgress";
+import PaymentScreen from "../screens/PaymentScreen";
 
 const Test = () => {
     return (
         <View style={styles.container}>
-            <PaymentProgress/>
+            <PaymentScreen route={{ params: { movieName: 'Alibaba' } }}/>
         </View>
     );
 };
