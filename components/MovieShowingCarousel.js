@@ -42,6 +42,8 @@ const MovieShowingCarousel = ({data, isShowing}) => {
     };
 
     useEffect(() => {
+        console.log("data: ", data)
+        console.log("newData: ", newData)
         clearInterval(interval.current);
     }, [SIZE, SPACER, data.length, offSet.value, scrollViewRef]);
 
@@ -59,7 +61,6 @@ const MovieShowingCarousel = ({data, isShowing}) => {
                 bounces={false}
                 showsHorizontalScrollIndicator={false}>
                 {newData.map((item, index) => {
-                    // eslint-disable-next-line react-hooks/rules-of-hooks
                     const style = useAnimatedStyle(() => {
                         const scale = interpolate(
                             x.value,

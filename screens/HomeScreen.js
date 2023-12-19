@@ -1,11 +1,69 @@
 import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
 import RotatingBanner from '../components/RotatingBanner';
 import MovieShowingCarousel from "../components/MovieShowingCarousel";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
+import axios from 'axios';
 import {useFocusEffect} from '@react-navigation/native';
 
 function HomeScreen({navigation}) {
     const [isShowing, setIsShowing] = useState(true)
+    const [movies, setMovies] = useState([])
+
+    const getMovies1 = async () => {
+        // fetch('http://127.0.0.1:8080/movies/enabe', {
+        fetch('http://192.168.1.9:8080/movies/enable', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                if (responseJson) {
+                    console.log(responseJson)
+                    setMovies(responseJson)
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    const getMovies = async () => {
+        try {
+            const response = await fetch('http://192.168.1.9:8080/movies/enable', {
+                method: 'GET',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            });
+            const data = await response.json();
+            let list = []
+
+            for (const key in data) {
+                if (data.hasOwnProperty(key)) {
+                    const dataKey = data[key];
+                    const posterURL = dataKey.posterURL;
+                    if (posterURL !== undefined) {
+                        dataKey.image = posterURL;
+                        list.push({image: posterURL})
+                    }
+                }
+            }
+
+
+            setMovies(list)
+
+
+        } catch (error) {
+            console.error('Error in API call:', error);
+        }
+    };
+
+    useEffect(() => {
+        getMovies().then(r => {})
+    }, []);
 
     const selectShowing = (selectedOption) => {
         setIsShowing(true)
