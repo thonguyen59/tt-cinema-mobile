@@ -12,7 +12,7 @@ const Stack = createNativeStackNavigator();
 
 function MainNavigation() {
     return (
-        <Stack.Navigator screenOptions={{headerTintColor: 'white'}}>
+        <Stack.Navigator screenOptions={{headerTintColor: 'rgba(255,255,255,0.67)'}}>
             <Stack.Screen name="drawer" component={DrawerNavigation} options={{headerShown: false}}/>
             <Stack.Screen name="movieDetail" component={MovieDetailScreen}
                           options={{
