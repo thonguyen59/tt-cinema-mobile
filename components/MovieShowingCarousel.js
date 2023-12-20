@@ -16,9 +16,9 @@ const MovieShowingCarousel = ({data, isShowing}) => {
     const scrollViewRef = useAnimatedRef(null);
     const interval = useRef();
     const [newData] = useState([
-        {key: 'spacer-left'},
+        {key: 'spacer-left', id: 0, posterURL: ''},
         ...data,
-        {key: 'spacer-right'},
+        {key: 'spacer-right', id: -1, posterURL: ''},
     ]);
     const navigation = useNavigation();
     const {width} = useWindowDimensions();
@@ -42,6 +42,8 @@ const MovieShowingCarousel = ({data, isShowing}) => {
     };
 
     useEffect(() => {
+        console.log("data: ", data)
+        console.log("newData: ", newData)
         clearInterval(interval.current);
     }, [SIZE, SPACER, data.length, offSet.value, scrollViewRef]);
 
@@ -59,7 +61,7 @@ const MovieShowingCarousel = ({data, isShowing}) => {
                 bounces={false}
                 showsHorizontalScrollIndicator={false}>
                 {newData.map((item, index) => {
-                    // eslint-disable-next-line react-hooks/rules-of-hooks
+                    console.log(item)
                     const style = useAnimatedStyle(() => {
                         const scale = interpolate(
                             x.value,
@@ -70,14 +72,15 @@ const MovieShowingCarousel = ({data, isShowing}) => {
                             transform: [{scale}],
                         };
                     });
-                    if (!item.image) {
+                    if (!item.posterURL) {
                         return <View style={{width: SPACER}} key={index}/>;
                     }
+
                     return (
                         <View style={{width: SIZE}} key={index}>
                             <TouchableOpacity onPress={goToDetails}>
                                 <Animated.View style={[styles.imageContainer, style]}>
-                                    <Image source={item.image} style={styles.image}/>
+                                    <Image source={{uri: item.posterURL}} style={styles.image}/>
                                 </Animated.View>
                             </TouchableOpacity>
                         </View>
