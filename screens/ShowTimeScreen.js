@@ -1,6 +1,7 @@
-import {StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, SectionList, FlatList} from 'react-native';
-import React, {useState} from "react";
+import { StyleSheet, Text, View, Image, Button, ScrollView, TouchableOpacity, SectionList, FlatList } from 'react-native';
+import React, { useState, useCallback, useRef } from "react";
 import CinemaShowtimeDropdown from "../components/CinemaShowtimeDropdown";
+import YoutubePlayer from "react-native-youtube-iframe";
 
 function ShowTimeScreen() {
     const [dateSelected, setDateSelected] = useState(1);
@@ -13,12 +14,12 @@ function ShowTimeScreen() {
     ];
 
     const data2 = [
-        {id: 4, time: '01:30'},
-        {id: 5, time: '02:15'},
-        {id: 6, time: '03:00'},
-        {id: 7, time: '04:30'},
-        {id: 8, time: '05:15'},
-        {id: 9, time: '06:00'},
+        { id: 4, time: '01:30' },
+        { id: 5, time: '02:15' },
+        { id: 6, time: '03:00' },
+        { id: 7, time: '04:30' },
+        { id: 8, time: '05:15' },
+        { id: 9, time: '06:00' },
     ];
 
     const handleDateSelection = (date) => {
@@ -29,26 +30,31 @@ function ShowTimeScreen() {
         setLocationSelected(location);
     };
 
-    const renderShowTime = ({item}) => (
+    const renderShowTime = ({ item }) => (
         <View>
-            <CinemaShowtimeDropdown title={item.title} data={data2}/>
+            <CinemaShowtimeDropdown title={item.title} data={data2} />
         </View>
     );
-
     return (
         <View style={styles.container}>
-            <Image source={require('../assets/banners/visa.jpg')} style={styles.poster}/>
+            <View>
+                <YoutubePlayer
+                    height={300}
+                    videoId={"iee2TATGMyI"}
+                />
+            </View>
+            {/* <Image source={require('../assets/banners/visa.jpg')} style={styles.} /> */}
             <View style={styles.bodyContainer}>
                 <Text style={styles.title}>KẺ ẨN DANH</Text>
-                <Text style={{color: 'rgba(255,255,255,0.67)', fontSize: 16}}>150 phút</Text>
+                <Text style={{ color: 'rgba(255,255,255,0.67)', fontSize: 16 }}>150 phút</Text>
             </View>
 
             <View>
-                <ScrollView horizontal={true} style={{marginTop: 20, marginLeft: 12}}>
+                <ScrollView horizontal={true} style={{ marginTop: 20, marginLeft: 12 }}>
                     <View style={[styles.date, dateSelected === 1 && styles.dateSelected]}>
                         <TouchableOpacity>
                             <Text style={[styles.text, dateSelected === 1 && styles.textSelected]}>25</Text>
-                            <Text style={[styles.text, dateSelected === 1 && styles.textSelected, {fontSize: 19}]}>
+                            <Text style={[styles.text, dateSelected === 1 && styles.textSelected, { fontSize: 19 }]}>
                                 Mo
                             </Text>
                         </TouchableOpacity>
@@ -56,20 +62,20 @@ function ShowTimeScreen() {
                     <View style={styles.date}>
                         <TouchableOpacity>
                             <Text style={styles.text}>26</Text>
-                            <Text style={[styles.text, {fontSize: 19}]}>Tu</Text>
+                            <Text style={[styles.text, { fontSize: 19 }]}>Tu</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.date}>
                         <TouchableOpacity>
                             <Text style={styles.text}>27</Text>
-                            <Text style={[styles.text, {fontSize: 19}]}>We</Text>
+                            <Text style={[styles.text, { fontSize: 19 }]}>We</Text>
                         </TouchableOpacity>
                     </View>
                 </ScrollView>
             </View>
 
             <View>
-                <ScrollView horizontal={true} style={{marginTop: 20, marginLeft: 12}}>
+                <ScrollView horizontal={true} style={{ marginTop: 20, marginLeft: 12 }}>
                     <View style={[styles.location, locationSelected === 1 && styles.locationSelected]}>
                         <TouchableOpacity>
                             <Text style={[styles.text, dateSelected === 1 && styles.textSelected]}>TPHCM</Text>
@@ -89,7 +95,7 @@ function ShowTimeScreen() {
             </View>
 
 
-            <View style={{marginTop: 15}}>
+            <View style={{ marginTop: 15 }}>
                 <FlatList
                     data={data}
                     renderItem={renderShowTime}
