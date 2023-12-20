@@ -77,7 +77,7 @@ const MovieShowingCarousel = ({data, isShowing}) => {
                         <View style={{width: SIZE}} key={index}>
                             <TouchableOpacity onPress={goToDetails}>
                                 <Animated.View style={[styles.imageContainer, style]}>
-                                    <Image source={item.image} style={styles.image}/>
+                                    <Image source={{uri: item.image}} style={styles.image}/>
                                 </Animated.View>
                             </TouchableOpacity>
                         </View>

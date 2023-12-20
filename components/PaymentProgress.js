@@ -3,8 +3,6 @@ import React, {useEffect, useState} from "react";
 import {CheckBox} from "react-native-elements";
 import {useNavigation} from "@react-navigation/native";
 
-;
-
 function PaymentProgress({route}) {
     const navigation = useNavigation();
     const [step, setStep] = useState(1)
