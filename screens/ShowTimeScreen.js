@@ -37,13 +37,7 @@ function ShowTimeScreen() {
     );
     return (
         <View style={styles.container}>
-            <View>
-                <YoutubePlayer
-                    height={300}
-                    videoId={"iee2TATGMyI"}
-                />
-            </View>
-            {/* <Image source={require('../assets/banners/visa.jpg')} style={styles.} /> */}
+             <Image source={require('../assets/banners/visa.jpg')} style={styles.poster} />
             <View style={styles.bodyContainer}>
                 <Text style={styles.title}>KẺ ẨN DANH</Text>
                 <Text style={{ color: 'rgba(255,255,255,0.67)', fontSize: 16 }}>150 phút</Text>

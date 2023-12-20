@@ -2,11 +2,17 @@ import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
 import {faTicket} from "@fortawesome/free-solid-svg-icons";
 import React from "react";
+import YoutubePlayer from "react-native-youtube-iframe";
 
 function MovieDetailScreen({route}) {
     return (
         <View style={styles.container}>
-            <Image source={require('../assets/images/Avengers.jpg')} style={styles.trailer}/>
+            <View style={styles.trailer}>
+                <YoutubePlayer
+                    height={300}
+                    videoId={"GpmOn4RyzZI"}
+                />
+            </View>
             <Text style={styles.title}>{route.params.movieName}</Text>
             <View style={{alignItems: "flex-end"}}>
                 <Text style={{
@@ -41,10 +47,13 @@ function MovieDetailScreen({route}) {
             <Text style={styles.label}>Cast</Text>
             <Text style={styles.content}>Đắm chiềm trong thế giới</Text>
 
-            <TouchableOpacity style={styles.bookingBtn}>
-                <FontAwesomeIcon icon={faTicket} style={styles.bookingIcon}/>
-                <Text style={styles.bookingTxt}>Booking</Text>
-            </TouchableOpacity>
+            <View style={{height: '15%'}}>
+                <TouchableOpacity style={styles.bookingBtn}>
+                    <FontAwesomeIcon icon={faTicket} style={styles.bookingIcon}/>
+                    <Text style={styles.bookingTxt}>Booking</Text>
+                </TouchableOpacity>
+            </View>
+
         </View>
     )
 }
@@ -52,15 +61,14 @@ function MovieDetailScreen({route}) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'column',
         backgroundColor: 'black',
+        justifyContent: 'flex-start',
     },
     trailer: {
-        width: '100%',
-        height: '30%'
+        marginTop: 10,
+        height: '28%',
     },
     title: {
-        marginTop: 15,
         fontSize: 22,
         fontWeight: 'bold',
         color: 'white',
@@ -83,9 +91,9 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         backgroundColor: '#16cc3c',
         borderRadius: 10,
-        paddingVertical: 7,
+        paddingVertical: 10,
         width: '95%',
-        marginTop: 15
+        marginTop: 'auto',
     },
     bookingTxt: {
         marginRight: 5,
