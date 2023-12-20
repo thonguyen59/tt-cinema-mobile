@@ -3,66 +3,33 @@ import RotatingBanner from '../components/RotatingBanner';
 import MovieShowingCarousel from "../components/MovieShowingCarousel";
 import React, {useEffect, useState} from "react";
 import axios from 'axios';
-import {useFocusEffect} from '@react-navigation/native';
 
 function HomeScreen({navigation}) {
     const [isShowing, setIsShowing] = useState(true)
-    const [movies, setMovies] = useState([])
+    const [moviesShowing, setMoviesShowing] = useState([])
+    const [idShowing, setIdShowing] = useState([])
+    const [moviesComing, setMoviesComing] = useState([])
+    const [postersComing, setPostersComing] = useState([])
 
-    const getMovies1 = async () => {
-        // fetch('http://127.0.0.1:8080/movies/enabe', {
-        fetch('http://192.168.1.9:8080/movies/enable', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                if (responseJson) {
-                    console.log(responseJson)
-                    setMovies(responseJson)
-                }
+    const getDataUsingSimpleGetCall = () => {
+        axios
+            .get('http://192.168.1.9:8080/movies/enable')
+            .then(function (response) {
+                setMoviesShowing(response.data)
+                let arr = []
+                response.data.forEach(e => {
+                    arr.push({id: e.id, posterURL: e.posterURL})
+                })
+                setIdShowing(arr)
             })
-            .catch((error) => {
-                console.error(error);
-            });
-    }
-
-    const getMovies = async () => {
-        try {
-            const response = await fetch('http://192.168.1.9:8080/movies/enable', {
-                method: 'GET',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                },
-            });
-            const data = await response.json();
-            let list = []
-
-            for (const key in data) {
-                if (data.hasOwnProperty(key)) {
-                    const dataKey = data[key];
-                    const posterURL = dataKey.posterURL;
-                    if (posterURL !== undefined) {
-                        dataKey.image = posterURL;
-                        list.push({image: posterURL})
-                    }
-                }
-            }
-
-
-            setMovies(list)
-
-
-        } catch (error) {
-            console.error('Error in API call:', error);
-        }
+            .catch(function (error) {
+                console.log(error.message)
+            })
     };
 
+
     useEffect(() => {
-        getMovies().then(r => {})
+        getDataUsingSimpleGetCall()
     }, []);
 
     const selectShowing = (selectedOption) => {
@@ -76,17 +43,36 @@ function HomeScreen({navigation}) {
     const data = [
         {
             image: require('../assets/images/Avengers.jpg'),
+            id : 1
         },
         {
             image: require('../assets/images/Black_Window.jpg'),
+            id : 1
         },
         {
             image: require('../assets/images/Joker.jpg'),
+            id : 1
         },
         {
             image: require('../assets/images/star_war.jpg'),
+            id : 1
         },
     ];
+
+    // const data = [
+    //     {
+    //         image: require('../assets/images/Avengers.jpg'),
+    //     },
+    //     {
+    //         image: require('../assets/images/Black_Window.jpg'),
+    //     },
+    //     {
+    //         image: require('../assets/images/Joker.jpg'),
+    //     },
+    //     {
+    //         image: require('../assets/images/star_war.jpg'),
+    //     },
+    // ];
 
     return (
         <View style={styles.container}>
@@ -102,9 +88,8 @@ function HomeScreen({navigation}) {
                 </TouchableOpacity>
             </View>
 
-
             {isShowing && <View>
-                <MovieShowingCarousel isShowing={true} data={data} autoPlay={false} pagination={true}/>
+                <MovieShowingCarousel isShowing={true} data={idShowing} autoPlay={false} pagination={true}/>
             </View>}
 
             {!isShowing && <View>
@@ -127,7 +112,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignSelf: 'center',
         backgroundColor: '#4A4A4A',
-        marginVertical: 12,
+        marginTop: 20,
+        marginBottom: 20,
         borderRadius: 10,
         paddingHorizontal: 5
     },
