@@ -3,15 +3,13 @@ import RotatingBanner from '../components/RotatingBanner';
 import MovieShowingCarousel from "../components/MovieShowingCarousel";
 import React, {useEffect, useState} from "react";
 import axios from 'axios';
+import MovieComingCarousel from "../components/MovieComingCarousel";
 
 function HomeScreen({navigation}) {
     const [isShowing, setIsShowing] = useState(true)
     const [moviesShowing, setMoviesShowing] = useState([])
-    const [idShowing, setIdShowing] = useState([])
     const [moviesComing, setMoviesComing] = useState([])
-    const [postersComing, setPostersComing] = useState([])
-
-    const getDataUsingSimpleGetCall = () => {
+    const getMoviesShowing = () => {
         axios
             .get('http://192.168.1.9:8080/movies/enable')
             .then(function (response) {
@@ -20,7 +18,8 @@ function HomeScreen({navigation}) {
                 response.data.forEach(e => {
                     arr.push({id: e.id, posterURL: e.posterURL})
                 })
-                setIdShowing(arr)
+                setMoviesShowing(arr)
+                setMoviesComing(arr)
             })
             .catch(function (error) {
                 console.log(error.message)
@@ -29,7 +28,8 @@ function HomeScreen({navigation}) {
 
 
     useEffect(() => {
-        getDataUsingSimpleGetCall()
+        console.log("Call API getMoviesShowing")
+        getMoviesShowing()
     }, []);
 
     const selectShowing = (selectedOption) => {
@@ -88,12 +88,12 @@ function HomeScreen({navigation}) {
                 </TouchableOpacity>
             </View>
 
-            {isShowing && <View>
-                <MovieShowingCarousel isShowing={true} data={idShowing} autoPlay={false} pagination={true}/>
+            {isShowing && moviesShowing.length > 0 && <View>
+                <MovieShowingCarousel data={moviesShowing} autoPlay={false} pagination={true}/>
             </View>}
 
-            {!isShowing && <View>
-                <MovieShowingCarousel data={data} autoPlay={false} pagination={true}/>
+            {!isShowing && moviesComing.length > 0 && <View>
+                <MovieComingCarousel data={moviesComing} autoPlay={false} pagination={true}/>
             </View>}
 
         </View>

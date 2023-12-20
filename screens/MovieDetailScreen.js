@@ -1,28 +1,58 @@
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
 import {faTicket} from "@fortawesome/free-solid-svg-icons";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import YoutubePlayer from "react-native-youtube-iframe";
+import axios from "axios";
 
 function MovieDetailScreen({route}) {
+    const [movie, setMovie] = useState({})
+    const [releasedDate, setReleasedDate] = useState('')
+
+
+    const getMovieDetail = () => {
+        let id = route.params.id
+        var url = 'http://192.168.1.9:8080/movies/detail/' + id
+
+        axios
+            .get(url)
+            .then(function (response) {
+                setMovie(response.data)
+                let date = response.data.releaseDate.split('-')
+                console.log(date)
+                date = date[2] + ' tháng ' + date[1] + ' năm ' + date[0]
+                console.log(date)
+                setReleasedDate(date)
+            })
+            .catch(function (error) {
+                console.log(error.message)
+            })
+    };
+
+    useEffect(() => {
+        getMovieDetail()
+        console.log("Detail: ", movie)
+    }, []);
+
+
     return (
         <View style={styles.container}>
             <View style={styles.trailer}>
                 <YoutubePlayer
                     height={300}
-                    videoId={"GpmOn4RyzZI"}
+                    videoId={movie.trailerURL}
                 />
             </View>
-            <Text style={styles.title}>{route.params.movieName}</Text>
+            <Text style={styles.title}>{movie.title}</Text>
             <View style={{alignItems: "flex-end"}}>
                 <Text style={{
                     fontSize: 18,
                     color: 'rgba(255,255,255,0.67)'
-                }}>150 phút</Text>
+                }}>{movie.time} phút</Text>
             </View>
 
             <Text style={styles.label}>Description</Text>
-            <Text style={styles.content}>Đắm chiềm trong thế giới</Text>
+            <Text style={styles.content}>{movie.description}</Text>
 
             <View
                 style={{
@@ -33,19 +63,27 @@ function MovieDetailScreen({route}) {
             />
 
             <Text style={styles.label}>Released Date</Text>
-            <Text style={styles.content}>Đắm chiềm trong thế giới</Text>
+            <Text style={styles.content}>{releasedDate}</Text>
 
             <Text style={styles.label}>Rating</Text>
-            <Text style={styles.content}>Đắm chiềm trong thế giới</Text>
+            <Text style={styles.content}>{movie.rating}</Text>
 
             <Text style={styles.label}>Languages</Text>
-            <Text style={styles.content}>Đắm chiềm trong thế giới</Text>
+            <Text style={styles.content}>{movie.description}</Text>
+
+            <View
+                style={{
+                    marginVertical: 10,
+                    borderBottomColor: 'white',
+                    borderBottomWidth: StyleSheet.hairlineWidth,
+                }}
+            />
 
             <Text style={styles.label}>Director</Text>
-            <Text style={styles.content}>Đắm chiềm trong thế giới</Text>
+            <Text style={styles.content}>{movie.director}</Text>
 
             <Text style={styles.label}>Cast</Text>
-            <Text style={styles.content}>Đắm chiềm trong thế giới</Text>
+            <Text style={styles.content}>{movie.cast}</Text>
 
             <View style={{height: '15%'}}>
                 <TouchableOpacity style={styles.bookingBtn}>
@@ -53,7 +91,6 @@ function MovieDetailScreen({route}) {
                     <Text style={styles.bookingTxt}>Booking</Text>
                 </TouchableOpacity>
             </View>
-
         </View>
     )
 }

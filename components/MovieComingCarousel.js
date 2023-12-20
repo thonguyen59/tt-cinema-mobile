@@ -12,13 +12,13 @@ import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faTicket} from '@fortawesome/free-solid-svg-icons';
 import {useNavigation} from "@react-navigation/native";
 
-const MovieShowingCarousel = ({data}) => {
+const MovieComingCarousel = ({data}) => {
     const scrollViewRef = useAnimatedRef(null);
     const interval = useRef();
     const [newData] = useState([
-        {key: 'spacer-left', posterURL: '', title: '', time: ''},
+        {key: 'spacer-left', id: 0, posterURL: ''},
         ...data,
-        {key: 'spacer-right', posterURL: '', title: '', time: ''},
+        {key: 'spacer-right', id: -1, posterURL: ''},
     ]);
     const navigation = useNavigation();
     const {width} = useWindowDimensions();
@@ -33,8 +33,8 @@ const MovieShowingCarousel = ({data}) => {
         },
     });
 
-    const goToDetails = (id) => {
-        navigation.navigate('movieDetail', {id: id});
+    const goToDetails = () => {
+        navigation.navigate('movieDetail', {movieName: 'The Eras rour'});
     };
 
     const goBooking = () => {
@@ -42,6 +42,8 @@ const MovieShowingCarousel = ({data}) => {
     };
 
     useEffect(() => {
+        console.log("data: ", data)
+        console.log("newData: ", newData)
         clearInterval(interval.current);
     }, [SIZE, SPACER, data.length, offSet.value, scrollViewRef]);
 
@@ -72,34 +74,26 @@ const MovieShowingCarousel = ({data}) => {
                     if (!item.posterURL) {
                         return <View style={{width: SPACER}} key={index}/>;
                     }
-                    var time = item.time + " minutes"
+
                     return (
                         <View style={{width: SIZE}} key={index}>
-                            <TouchableOpacity onPress={() => {goToDetails(item.id)}}>
+                            <TouchableOpacity onPress={goToDetails}>
                                 <Animated.View style={[styles.imageContainer, style]}>
                                     <Image source={{uri: item.posterURL}} style={styles.image}/>
                                 </Animated.View>
                             </TouchableOpacity>
-
-                            <View style={styles.title}>
-                                <TitleMovie title={item.title} time={time}/>
-                            </View>
                         </View>
                     );
                 })}
             </Animated.ScrollView>
-
-            <View>
-                <TouchableOpacity onPress={goBooking} style={styles.bookingBtn}>
-                    <FontAwesomeIcon icon={faTicket} style={styles.bookingIcon}/>
-                    <Text style={styles.bookingTxt}>Booking</Text>
-                </TouchableOpacity>
+            <View style={styles.title}>
+                <TitleMovie title="Thor" time="90 minutes"/>
             </View>
         </View>
     );
 };
 
-export default MovieShowingCarousel;
+export default MovieComingCarousel;
 
 const styles = StyleSheet.create({
     imageContainer: {
