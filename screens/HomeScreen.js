@@ -10,26 +10,34 @@ function HomeScreen({navigation}) {
     const [moviesShowing, setMoviesShowing] = useState([])
     const [moviesComing, setMoviesComing] = useState([])
     const getMoviesShowing = () => {
-        axios
-            .get('http://192.168.1.9:8080/movies/enable')
-            .then(function (response) {
-                setMoviesShowing(response.data)
-                let arr = []
-                response.data.forEach(e => {
-                    arr.push({id: e.id, posterURL: e.posterURL})
-                })
-                setMoviesShowing(arr)
-                setMoviesComing(arr)
-            })
-            .catch(function (error) {
-                console.log(error.message)
-            })
+        axios.get('http://10.91.10.85:8080/movies/enable').then(function(response) {
+            let arr = [];
+            response.data.forEach(e => {
+                arr.push({id: e.id, posterURL: e.posterURL, title: e.posterURL, time: e.time});
+            });
+            setMoviesShowing(arr);
+        }).catch(function(error) {
+            console.log(error.message);
+        });
+    };
+
+    const getMoviesComing = () => {
+        axios.get('http://10.91.10.85:8080/movies/coming-soon').then(function(response) {
+            let arr = [];
+            response.data.forEach(e => {
+                arr.push({id: e.id, posterURL: e.posterURL, title: e.posterURL, time: e.time});
+            });
+            setMoviesComing(arr);
+        }).catch(function(error) {
+            console.log(error.message);
+        });
     };
 
 
     useEffect(() => {
-        console.log("Call API getMoviesShowing")
+        console.log("Call API getMovies")
         getMoviesShowing()
+        getMoviesComing()
     }, []);
 
     const selectShowing = (selectedOption) => {
@@ -38,41 +46,7 @@ function HomeScreen({navigation}) {
 
     const selectComing = (selectedOption) => {
         setIsShowing(false)
-    };
-
-    const data = [
-        {
-            image: require('../assets/images/Avengers.jpg'),
-            id : 1
-        },
-        {
-            image: require('../assets/images/Black_Window.jpg'),
-            id : 1
-        },
-        {
-            image: require('../assets/images/Joker.jpg'),
-            id : 1
-        },
-        {
-            image: require('../assets/images/star_war.jpg'),
-            id : 1
-        },
-    ];
-
-    // const data = [
-    //     {
-    //         image: require('../assets/images/Avengers.jpg'),
-    //     },
-    //     {
-    //         image: require('../assets/images/Black_Window.jpg'),
-    //     },
-    //     {
-    //         image: require('../assets/images/Joker.jpg'),
-    //     },
-    //     {
-    //         image: require('../assets/images/star_war.jpg'),
-    //     },
-    // ];
+    }
 
     return (
         <View style={styles.container}>

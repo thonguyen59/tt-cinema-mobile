@@ -16,9 +16,9 @@ const MovieComingCarousel = ({data}) => {
     const scrollViewRef = useAnimatedRef(null);
     const interval = useRef();
     const [newData] = useState([
-        {key: 'spacer-left', id: 0, posterURL: ''},
+        {key: 'spacer-left', posterURL: '', title: '', time: ''},
         ...data,
-        {key: 'spacer-right', id: -1, posterURL: ''},
+        {key: 'spacer-right', posterURL: '', title: '', time: ''},
     ]);
     const navigation = useNavigation();
     const {width} = useWindowDimensions();
@@ -33,8 +33,8 @@ const MovieComingCarousel = ({data}) => {
         },
     });
 
-    const goToDetails = () => {
-        navigation.navigate('movieDetail', {movieName: 'The Eras rour'});
+    const goToDetails = (id) => {
+        navigation.navigate('movieDetail', {id: id});
     };
 
     const goBooking = () => {
@@ -42,8 +42,6 @@ const MovieComingCarousel = ({data}) => {
     };
 
     useEffect(() => {
-        console.log("data: ", data)
-        console.log("newData: ", newData)
         clearInterval(interval.current);
     }, [SIZE, SPACER, data.length, offSet.value, scrollViewRef]);
 
@@ -74,21 +72,22 @@ const MovieComingCarousel = ({data}) => {
                     if (!item.posterURL) {
                         return <View style={{width: SPACER}} key={index}/>;
                     }
-
+                    var time = item.time + " minutes"
                     return (
                         <View style={{width: SIZE}} key={index}>
-                            <TouchableOpacity onPress={goToDetails}>
+                            <TouchableOpacity onPress={() => {goToDetails(item.id)}}>
                                 <Animated.View style={[styles.imageContainer, style]}>
                                     <Image source={{uri: item.posterURL}} style={styles.image}/>
                                 </Animated.View>
                             </TouchableOpacity>
+
+                            <View style={styles.title}>
+                                <TitleMovie title={item.title} time={time}/>
+                            </View>
                         </View>
                     );
                 })}
             </Animated.ScrollView>
-            <View style={styles.title}>
-                <TitleMovie title="Thor" time="90 minutes"/>
-            </View>
         </View>
     );
 };
