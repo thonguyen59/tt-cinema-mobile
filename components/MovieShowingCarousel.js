@@ -37,8 +37,8 @@ const MovieShowingCarousel = ({data}) => {
         navigation.navigate('movieDetail', {id: id});
     };
 
-    const goBooking = () => {
-        navigation.navigate('showTime');
+    const goBooking = (index) => {
+        navigation.navigate('showTime', {movie: data[index - 1]});
     };
 
     useEffect(() => {
@@ -47,50 +47,61 @@ const MovieShowingCarousel = ({data}) => {
 
     return (
         <View>
-            <Animated.ScrollView
-                ref={scrollViewRef}
-                onScroll={onScroll}
-                onMomentumScrollEnd={e => {
-                    offSet.value = e.nativeEvent.contentOffset.x;
-                }}
-                scrollEventThrottle={16}
-                snapToInterval={SIZE}
-                horizontal
-                bounces={false}
-                showsHorizontalScrollIndicator={false}>
-                {newData.map((item, index) => {
-                    const style = useAnimatedStyle(() => {
-                        const scale = interpolate(
-                            x.value,
-                            [(index - 2) * SIZE, (index - 1) * SIZE, index * SIZE],
-                            [0.95, 1, 0.95],
-                        );
-                        return {
-                            transform: [{scale}],
-                        };
-                    });
-                    if (!item.posterURL) {
-                        return <View style={{width: SPACER}} key={index}/>;
-                    }
-                    var time = item.time + " minutes"
-                    return (
-                        <View style={{width: SIZE}} key={index}>
-                            <TouchableOpacity onPress={() => {goToDetails(item.id)}}>
-                                <Animated.View style={[styles.imageContainer, style]}>
-                                    <Image source={{uri: item.posterURL}} style={styles.image}/>
-                                </Animated.View>
-                            </TouchableOpacity>
+            <View style={styles.container}>
+                <Animated.ScrollView
+                    ref={scrollViewRef}
+                    onScroll={onScroll}
+                    onMomentumScrollEnd={e => {
+                        offSet.value = e.nativeEvent.contentOffset.x;
+                    }}
+                    scrollEventThrottle={16}
+                    snapToInterval={SIZE}
+                    horizontal
+                    bounces={false}
+                    showsHorizontalScrollIndicator={false}>
+                    {newData.map((item, index) => {
+                        const style = useAnimatedStyle(() => {
+                            const scale = interpolate(
+                                x.value,
+                                [(index - 2) * SIZE, (index - 1) * SIZE, index * SIZE],
+                                [0.95, 1, 0.95],
+                            );
+                            return {
+                                transform: [{scale}],
+                            };
+                        });
+                        if (!item.posterURL) {
+                            return <View style={{width: SPACER}} key={index}/>;
+                        }
+                        var time = item.time + " minutes"
+                        return (
+                            <View style={[{width: SIZE}, styles.itemContainer]} key={index}>
+                                <TouchableOpacity onPress={() => {
+                                    goToDetails(item.id)
+                                }}>
+                                    <Animated.View style={[styles.imageContainer, style]}>
+                                        <Image source={{uri: item.posterURL}} style={styles.image}/>
+                                    </Animated.View>
+                                </TouchableOpacity>
 
-                            <View style={styles.title}>
-                                <TitleMovie title={item.title} time={time}/>
+                                <View style={styles.title}>
+                                    <TitleMovie title={item.title} time={time}/>
+                                </View>
+
+                                <View style={{height: 50}}></View>
+
+                                <View style={styles.visible}>
+                                    <TouchableOpacity onPress={() => goBooking(index)} style={styles.visibleBtn}>
+                                        <Text> </Text>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
-                        </View>
-                    );
-                })}
-            </Animated.ScrollView>
-
-            <View>
-                <TouchableOpacity onPress={goBooking} style={styles.bookingBtn}>
+                        );
+                    })}
+                </Animated.ScrollView>
+            </View>
+            <View style={styles.fluent}>
+                <TouchableOpacity style={styles.bookingBtn}>
                     <FontAwesomeIcon icon={faTicket} style={styles.bookingIcon}/>
                     <Text style={styles.bookingTxt}>Booking</Text>
                 </TouchableOpacity>
@@ -102,11 +113,22 @@ const MovieShowingCarousel = ({data}) => {
 export default MovieShowingCarousel;
 
 const styles = StyleSheet.create({
+    container: {
+        width: '100%',
+        height: 500,
+        position: 'absolute',
+        zIndex: 2
+    },
     imageContainer: {
         borderRadius: 10,
         overflow: 'hidden',
         width: '90%',
     },
+    itemContainer: {
+
+        zIndex: 2,
+    },
+
     image: {
         width: '100%',
         height: undefined,
@@ -115,6 +137,14 @@ const styles = StyleSheet.create({
     title: {
         marginTop: 5
     },
+    fluent: {
+        position: 'absolute',
+        transform: [
+            {translateX: 100},
+            {translateY: 410},
+        ],
+        zIndex: 1,
+    },
     bookingBtn: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -122,12 +152,10 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         backgroundColor: '#16cc3c',
         borderRadius: 10,
-        marginTop: 10,
         paddingVertical: 10,
-        width: '55%'
+        paddingHorizontal: 40
     },
     bookingTxt: {
-        marginRight: 5,
         color: 'white',
         fontSize: 16,
         fontWeight: 'bold'
@@ -135,5 +163,18 @@ const styles = StyleSheet.create({
     bookingIcon: {
         marginRight: 10,
         color: 'white',
+    },
+    visible: {
+        transform: [
+            {translateX: 33},
+            {translateY: 410},
+        ],
+        position: 'absolute',
+        zIndex: 2,
+    },
+    visibleBtn: {
+        // backgroundColor: 'red',
+        height: 40,
+        paddingRight: 166,
     },
 });

@@ -37,10 +37,6 @@ const MovieComingCarousel = ({data}) => {
         navigation.navigate('movieDetail', {id: id});
     };
 
-    const goBooking = () => {
-        navigation.navigate('showTime');
-    };
-
     useEffect(() => {
         clearInterval(interval.current);
     }, [SIZE, SPACER, data.length, offSet.value, scrollViewRef]);
