@@ -1,6 +1,6 @@
 import {Image, StyleSheet} from "react-native";
 
-function NormalSeat() {
+function NormalSeat(props) {
     return (
         <Image source={require('../../assets/logo/seat_small.png')} style={styles.normalSeat}></Image>
     )

@@ -2,14 +2,13 @@ import React, {useState} from "react";
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {useNavigation} from "@react-navigation/native";
 
-const CinemaShowtimeDropdown = ({title, data}) => {
+const CinemaShowtimeDropdown = ({title, showtime}) => {
     const navigation = useNavigation();
     const [dropdownVisible, setDropdownVisible] = useState(false);
 
     const handleSelect = (item) => {
-        navigation.navigate('bookingSeats')
+        navigation.navigate('bookingSeats', {title: title, showtime: item})
     };
-
 
     const renderItem = ({item}) => (
         <TouchableOpacity style={styles.item} onPress={() => handleSelect(item)}>
@@ -26,7 +25,7 @@ const CinemaShowtimeDropdown = ({title, data}) => {
             {dropdownVisible && (
                 <View style={styles.dropdown}>
                     <FlatList
-                        data={data}
+                        data={showtime}
                         numColumns='5'
                         keyExtractor={(item) => item.id.toString()}
                         renderItem={renderItem}
@@ -57,8 +56,9 @@ const styles = StyleSheet.create({
     },
     dropdown: {
         marginTop: 10,
+        marginLeft: 10,
         flexDirection: 'row',
-        justifyContent: "center"
+        justifyContent: "flex-start"
     },
     item: {
         padding: 10,

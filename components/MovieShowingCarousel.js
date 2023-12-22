@@ -137,14 +137,6 @@ const styles = StyleSheet.create({
     title: {
         marginTop: 5
     },
-    fluent: {
-        position: 'absolute',
-        transform: [
-            {translateX: 100},
-            {translateY: 410},
-        ],
-        zIndex: 1,
-    },
     bookingBtn: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -164,17 +156,46 @@ const styles = StyleSheet.create({
         marginRight: 10,
         color: 'white',
     },
+    fluent: {
+        position: 'absolute',
+        transform: [
+            {translateX: 120},
+            {translateY: 425},
+        ],
+        zIndex: 1,
+    },
+    visibleBtn: {
+        // backgroundColor: 'red',
+        height: 42,
+        paddingRight: 165,
+    },
     visible: {
         transform: [
-            {translateX: 33},
-            {translateY: 410},
+            {translateX: 50},
+            {translateY: 425},
         ],
         position: 'absolute',
         zIndex: 2,
     },
-    visibleBtn: {
-        // backgroundColor: 'red',
-        height: 40,
-        paddingRight: 166,
-    },
+    // visible: {
+    //     transform: [
+    //         {translateX: 33},
+    //         {translateY: 410},
+    //     ],
+    //     position: 'absolute',
+    //     zIndex: 2,
+    // },
+    // visibleBtn: {
+    //     // backgroundColor: 'red',
+    //     height: 40,
+    //     paddingRight: 166,
+    // },
+    // fluent: {
+    //     position: 'absolute',
+    //     transform: [
+    //         {translateX: 100},
+    //         {translateY: 410},
+    //     ],
+    //     zIndex: 1,
+    // },
 });
