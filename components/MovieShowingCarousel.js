@@ -38,7 +38,7 @@ const MovieShowingCarousel = ({data}) => {
     };
 
     const goBooking = (index) => {
-        navigation.navigate('showTime', {movie: data[index - 1]});
+        navigation.navigate('showtime', {movie: data[index - 1]});
     };
 
     useEffect(() => {

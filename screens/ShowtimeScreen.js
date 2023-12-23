@@ -6,14 +6,14 @@ import CinemaShowtimeDropdown from '../components/CinemaShowtimeDropdown';
 import YoutubePlayer from 'react-native-youtube-iframe';
 import axios from 'axios';
 
-function ShowTimeScreen({route}) {
+function ShowtimeScreen({route}) {
   const [dateSelected, setDateSelected] = useState('');
   const [locationSelected, setLocationSelected] = useState(1);
   const [data, setData] = useState([]);
   const [dates, setDates] = useState([]);
   const [locations, setLocations] = useState([]);
   const [cinemas, setCinemas] = useState([]);
-  const [showTimes, setShowTimes] = useState([]);
+  const [showtimes, setShowtimes] = useState([]);
 
   const [seats, setSeats] = useState([]);
   const weekday = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -32,7 +32,7 @@ function ShowTimeScreen({route}) {
 
   const getData = () => {
     let movieID = route.params.movie.id;
-    var url = 'http://10.91.10.85:8080/showtime/movie/' + 1;
+    var url = 'http://192.168.9.59:8080/showtime/movie/' + movieID;
     axios.get(url).then(function(response) {
       setData(response.data);
       // console.log('Call API get show times successfurl.');
@@ -41,18 +41,18 @@ function ShowTimeScreen({route}) {
     });
   };
 
-  function getShowTimes(cinemaName) {
-    let showTimes = [];
+  function getShowtimes(cinemaName) {
+    let showtimes = [];
     data.forEach(e => {
       let date = new Date(e.startTime);
       let id = date.getDate().toString() + date.getMonth().toString();
 
       if (id === dateSelected && e.cinema.location === locationSelected && e.cinema.name === cinemaName) {
         e.time = date.getHours().toString() + ':' + date.getMinutes().toString();
-        showTimes.push(e);
+        showtimes.push(e);
       }
     });
-    return showTimes;
+    return showtimes;
   }
 
   function createDatesAndLocations() {
@@ -72,15 +72,25 @@ function ShowTimeScreen({route}) {
     const locationResult = [];
 
     datesTemp.forEach(e => {
-      let temp = datesResult.findIndex((d) => d.id === e.id);
-      if (temp) {
+      let check = true
+      datesResult.forEach(d => {
+        if (d.id === e.id) {
+          check = false
+        }
+      })
+      if (check) {
         datesResult.push(e);
       }
     });
 
     locationsTemp.forEach(e => {
-      let temp = locationResult.findIndex((d) => d.name === e.name);
-      if (temp) {
+      let check = true
+      locationResult.forEach(d => {
+        if (d.name === e.name) {
+          check = false
+        }
+      })
+      if (check) {
         locationResult.push(e);
       }
     });
@@ -153,8 +163,8 @@ function ShowTimeScreen({route}) {
         </View>);
   };
 
-  const renderShowTime = ({item}) => (<View>
-        <CinemaShowtimeDropdown title={item.name} showtime={getShowTimes(item.name)}/>
+  const renderShowtime = ({item}) => (<View>
+        <CinemaShowtimeDropdown movie={route.params.movie} title={item.name} showtime={getShowtimes(item.name)}/>
       </View>);
 
   return (<View style={styles.container}>
@@ -188,7 +198,7 @@ function ShowTimeScreen({route}) {
         <View style={{marginTop: 15}}>
           <FlatList
               data={cinemas}
-              renderItem={renderShowTime}
+              renderItem={renderShowtime}
           />
         </View>
       </View>);
@@ -248,4 +258,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ShowTimeScreen;
+export default ShowtimeScreen;

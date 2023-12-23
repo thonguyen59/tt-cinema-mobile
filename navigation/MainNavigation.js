@@ -3,7 +3,7 @@ import DrawerNavigation from './DrawerNavigation';
 import MovieDetailScreen from '../screens/MovieDetailScreen';
 import BottomTab from './BottomTab';
 import HomeScreen from '../screens/HomeScreen';
-import ShowTimeScreen from "../screens/ShowTimeScreen";
+import ShowtimeScreen from "../screens/ShowtimeScreen";
 import SeatsScreen from "../screens/SeatsScreen";
 import CinemaShowtimeDropdown from "../components/CinemaShowtimeDropdown";
 import PaymentScreen from "../screens/PaymentScreen";
@@ -20,7 +20,7 @@ function MainNavigation() {
                               headerTransparent: true,
                               title: ''
                           }}/>
-            <Stack.Screen name="showTime" component={ShowTimeScreen}
+            <Stack.Screen name="showtime" component={ShowtimeScreen}
                           options={{
                               headerTitle: null,
                               headerTransparent: true,

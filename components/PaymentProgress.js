@@ -3,15 +3,29 @@ import React, {useEffect, useState} from "react";
 import {CheckBox} from "react-native-elements";
 import {useNavigation} from "@react-navigation/native";
 
-function PaymentProgress({route}) {
+function PaymentProgress({route, showtime, movie, seatsSelected}) {
     const navigation = useNavigation();
     const [step, setStep] = useState(1)
     const [checked, setChecked] = useState(false);
+    const [subtotal, setSubtotal] = useState(0);
+    const [numOfSeats, setNumOfSeats] = useState(0);
 
     const handleCheckboxToggle = () => {
         setChecked(!checked);
-        console.log(checked)
     };
+
+    useEffect(() => {
+        if (showtime) {
+            let normal = showtime.price * seatsSelected.normalSeats
+            let vip = (showtime.price + 15000) * seatsSelected.vipSeats
+            let couple = (showtime.price * 2 + 10000) * seatsSelected.coupleSeats
+            setSubtotal(normal + vip + couple)
+            seatsSelected.normal = normal
+            seatsSelected.vip = vip
+            seatsSelected.couple = couple
+            setNumOfSeats(seatsSelected.normalSeats + seatsSelected.vipSeats + seatsSelected.coupleSeats)
+        }
+    }, [seatsSelected]);
 
     useEffect(() => {
         if (route && route.params.step) {
@@ -20,7 +34,7 @@ function PaymentProgress({route}) {
     }, []);
 
     const toStep2 = () => {
-        navigation.navigate('payment', {movieName: 'The Eras rour'});
+        navigation.navigate('payment', {movie: movie, showtime: showtime, seatsSelected: seatsSelected, subtotal: subtotal, numOfSeats: numOfSeats});
     };
 
     return (
@@ -30,10 +44,14 @@ function PaymentProgress({route}) {
                     <Text style={styles.text}>Subtotal (including surcharges)</Text>
                 </View>
                 <View style={styles.line}>
-                    <Text style={styles.text}>2 Seats</Text>
-                    <Text style={[styles.text, {color: 'white', marginLeft: 'auto'}]}>110,000đ</Text>
+                    <Text style={styles.text}>{numOfSeats} Seats</Text>
+                    <Text style={[styles.text, {
+                        color: 'white',
+                        marginLeft: 'auto'
+                    }]}>{subtotal.toLocaleString('en-US')}đ</Text>
                 </View>
-                <TouchableOpacity onPress={toStep2} style={styles.bookingBtn}>
+                <TouchableOpacity disabled={numOfSeats === 0} onPress={toStep2}
+                                  style={numOfSeats !== 0 ? styles.bookingBtn : styles.bookingDisableBtn}>
                     <Text style={styles.bookingTxt}>Finish Payment (1/2)</Text>
                 </TouchableOpacity>
             </View>}
@@ -41,7 +59,7 @@ function PaymentProgress({route}) {
             {step === 2 && <View>
                 <View style={styles.line}>
                     <CheckBox
-                        value={checked}
+                        checked={checked}
                         onPress={handleCheckboxToggle}
                     />
 
@@ -51,13 +69,10 @@ function PaymentProgress({route}) {
                     </Text>
 
                 </View>
-                {!checked && <TouchableOpacity disabled={true} style={styles.bookingDisableBtn}>
-                        <Text style={styles.bookingTxt}>Finish Payment (2/2)</Text>
-                    </TouchableOpacity> ||
-                    <TouchableOpacity style={styles.bookingBtn}>
-                        <Text style={styles.bookingTxt}>Finish Payment (2/2)</Text>
-                    </TouchableOpacity>
-                }
+
+                <TouchableOpacity disabled={!checked} style={!checked ? styles.bookingDisableBtn : styles.bookingBtn}>
+                    <Text style={styles.bookingTxt}>Finish Payment (2/2)</Text>
+                </TouchableOpacity>
             </View>}
         </View>
     )

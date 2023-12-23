@@ -2,12 +2,12 @@ import React, {useState} from "react";
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {useNavigation} from "@react-navigation/native";
 
-const CinemaShowtimeDropdown = ({title, showtime}) => {
+const CinemaShowtimeDropdown = ({movie, title, showtime}) => {
     const navigation = useNavigation();
     const [dropdownVisible, setDropdownVisible] = useState(false);
 
     const handleSelect = (item) => {
-        navigation.navigate('bookingSeats', {title: title, showtime: item})
+        navigation.navigate('bookingSeats', {title: title, showtime: item, movie: movie})
     };
 
     const renderItem = ({item}) => (

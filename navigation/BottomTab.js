@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/HomeScreen';
-import ShowTimeScreen from '../screens/ShowTimeScreen';
+import ShowtimeScreen from '../screens/ShowtimeScreen';
 import StoreScreen from '../screens/StoreScreen';
 import PersonalScreen from '../screens/PersonalScreen';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -35,7 +35,7 @@ function BottomTab() {
                 }}/>
            
 
-            <Tab.Screen name="showtime" component={ShowTimeScreen}
+            <Tab.Screen name="store1" component={StoreScreen}
                 options={{
                     headerShown: false,
                     tabBarLabel: 'SHOWTIME',

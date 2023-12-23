@@ -5,14 +5,19 @@ import VIPSeat from './seats/VIPSeat';
 import CoupleSeat from './seats/CoupleSeat';
 import SoldSeat from './seats/SoldSeat';
 import axios from 'axios';
+import normalSeat from "./seats/NormalSeat";
 
-function SeatsBooking(props) {
+function SeatsBooking({ showtimeID, onSeatsSelectedChange}) {
   const rowHeader = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K'];
   const [seats, setSeats] = useState([]);
   const [seatIDsSelected, setSeatIDsSelected] = useState([]);
+  const [normalSeats, setNormalSeats] = useState(0);
+  const [vipSeats, setVIPSeats] =  useState(0);
+  const [coupleSeats, setCoupleSeats] =  useState(0);
+
 
   const getSeats = () => {
-    var url = 'http://10.91.10.85:8080/seat/' + props.showTimeID;
+    var url = 'http://192.168.9.59:8080/seat/' + showtimeID;
     axios.get(url).then(function(response) {
       setSeats(response.data);
       // console.log(response.data);
@@ -24,6 +29,12 @@ function SeatsBooking(props) {
   useEffect(() => {
     getSeats();
   }, []);
+
+  useEffect(() => {
+    let vip = 0
+    let double = 0
+    onSeatsSelectedChange({normalSeats: normalSeats, vipSeats: vipSeats, coupleSeats: coupleSeats});
+  }, [seatIDsSelected]);
 
   const rowHeaderRender = ({item}) => (
       <Text style={styles.text}>{item}</Text>
@@ -40,23 +51,38 @@ function SeatsBooking(props) {
   }
 
   function handleSelectSeat(item) {
-    let temp = seatIDsSelected;
-    temp.push(item.id);
-    setSeatIDsSelected(temp);
-    console.log(seatIDsSelected);
+    setSeatIDsSelected((prevSelectedSeats) => {
+      if (prevSelectedSeats.includes(item.id)) {
+        if (item.type === 'NORMAL') {
+          setNormalSeats(normalSeats - 1)
+        } else if (item.type === 'COUPLE') {
+          setCoupleSeats(coupleSeats - 1)
+        } else if (item.type === 'VIP') {
+          setVIPSeats(vipSeats - 1)
+        }
+        return prevSelectedSeats.filter((seatId) => seatId !== item.id);
+      } else {
+        if (item.type === 'NORMAL') {
+          setNormalSeats(normalSeats + 1)
+        } else if (item.type === 'COUPLE') {
+          setCoupleSeats(coupleSeats + 1)
+        } else if (item.type === 'VIP') {
+          setVIPSeats(vipSeats + 1)
+        }
+        return [...prevSelectedSeats, item.id];
+      }
+    });
   }
 
-  const seatsRender = ({item}) => (
+  const seatsRender = ({ item }) => (
       <View style={styles.item}>
         <TouchableOpacity disabled={item.isBooked} onPress={() => handleSelectSeat(item)}>
-          {item.type === 'COUPLE' &&
+          {item.type === 'COUPLE' && (
               <View style={{width: 52, alignItems: 'center'}}>
-                <Image source={require('../assets/logo/seat_small.png')} style={styles.coupleSeat}></Image>
+                <Image source={require('../assets/logo/seat_small.png')} style={[styles.coupleSeat, seatIDsSelected.includes(item.id) && styles.selectedCoupleSeat]}></Image>
               </View>
-          }
-
-          {item.type !== 'COUPLE' && mapSeat(item)
-          }
+          )}
+          {item.type !== 'COUPLE' && mapSeat(item)}
         </TouchableOpacity>
       </View>
   );
@@ -71,7 +97,7 @@ function SeatsBooking(props) {
           <FlatList
               numColumns="12"
               data={seats}
-              keyExtractor={(item) => item.id.toString()}
+              keyExtractor={(item) => item.id}
               renderItem={seatsRender}/>
         </View>
       </View>
@@ -135,6 +161,12 @@ const styles = StyleSheet.create({
     tintColor: '#6FAA35',
     width: 25,
     aspectRatio: 1,
+  },
+  selectedCoupleSeat: {
+    tintColor: '#6FAA35',
+    width: 40,
+    height: 25,
+    resizeMode: 'stretch',
   },
 });
 

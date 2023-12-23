@@ -1,10 +1,11 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React, {useState} from "react";
+import {Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, {useEffect, useState} from "react";
 import PaymentProgress from "../components/PaymentProgress";
 
 function PaymentScreen({route}) {
     const [momo, setMomo] = useState(false);
     const [zaloPay, setZaloPay] = useState(false);
+    const [showtime] = useState(route.params.showtime)
 
     function changePaymentMethod(method) {
         if ('momo' === method) {
@@ -16,27 +17,45 @@ function PaymentScreen({route}) {
         }
     }
 
-    return (
-        <View style={styles.container}>
-            <Image source={require('../assets/images/Avengers.jpg')} style={styles.trailer}/>
-            <Text style={styles.title}>{route.params.movieName}</Text>
+    useEffect(() => {
+        console.log(route.params.seatsSelected)
+    }, []);
 
-            <Text style={styles.content}>BHD Star The Graden - Screen 2</Text>
+    return (<View style={styles.container}>
+        <Image source={{uri: route.params.movie.posterURL}} style={styles.trailer}/>
+        <Text style={styles.title}>{route.params.movie.title}</Text>
+
+        <ScrollView style={styles.scrollView}>
+            <Text style={styles.content}>{showtime.cinema.name} - Screen {showtime.screen}</Text>
             <Text style={styles.content}>25 tháng 9, 2023 15:30 - 16:46</Text>
-            <Text style={styles.content}>1 vé</Text>
+            <Text style={styles.content}>{route.params.numOfSeats} vé</Text>
 
             <View style={styles.line}/>
 
             <Text style={styles.label}>Item Ordered</Text>
-            <View style={[styles.row, {marginTop: 5}]}>
-                <Text style={styles.content}>1 x Adult-VIP: E7</Text>
-                <Text style={styles.contentRight}>65,000 đ</Text>
-            </View>
+
+            {route.params.seatsSelected.normalSeats !== 0 && <View style={[styles.row, {marginTop: 5}]}>
+                <Text style={styles.content}>{route.params.seatsSelected.normalSeats} x Adult-NORMAL: E7</Text>
+                <Text
+                    style={styles.contentRight}>{route.params.seatsSelected.normal.toLocaleString('en-US')} đ</Text>
+            </View>}
+
+            {route.params.seatsSelected.vipSeats !== 0 && <View style={[styles.row, {marginTop: 5}]}>
+                <Text style={styles.content}>{route.params.seatsSelected.vipSeats} x Adult-VIP: E7</Text>
+                <Text
+                    style={styles.contentRight}>{route.params.seatsSelected.vip.toLocaleString('en-US')} đ</Text>
+            </View>}
+
+            {route.params.seatsSelected.coupleSeats !== 0 && <View style={[styles.row, {marginTop: 5}]}>
+                <Text style={styles.content}>{route.params.seatsSelected.coupleSeats} x Adult-COUPLE: E7</Text>
+                <Text
+                    style={styles.contentRight}>{route.params.seatsSelected.couple.toLocaleString('en-US')} đ</Text>
+            </View>}
 
             <View style={styles.line}/>
             <View style={[styles.row, {marginTop: 5}]}>
                 <Text style={styles.content}>Subtotal (including surcharges)</Text>
-                <Text style={styles.contentRight}>65,000 đ</Text>
+                <Text style={styles.contentRight}>{route.params.subtotal.toLocaleString('en-US')} đ</Text>
             </View>
 
             <View style={styles.line}/>
@@ -44,20 +63,22 @@ function PaymentScreen({route}) {
 
             <View style={styles.row}>
                 <Text style={styles.content1}>Ví Momo</Text>
-                <TouchableOpacity onPress={() => changePaymentMethod('momo')} style={momo ? styles.checkedBox : styles.unCheckedBox}><Text></Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => changePaymentMethod('momo')}
+                                  style={momo ? styles.checkedBox : styles.unCheckedBox}><Text></Text></TouchableOpacity>
             </View>
 
             <View style={styles.row}>
                 <Text style={styles.content1}>Ví ZaloPay</Text>
-                <TouchableOpacity onPress={() => changePaymentMethod('zaloPay')} style={zaloPay ? styles.checkedBox : styles.unCheckedBox}><Text></Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => changePaymentMethod('zaloPay')}
+                                  style={zaloPay ? styles.checkedBox : styles.unCheckedBox}><Text></Text></TouchableOpacity>
             </View>
+        </ScrollView>
 
-            <View style={styles.footer}>
-                <PaymentProgress route={{params: {step: 2}}}/>
-            </View>
-
+        <View style={styles.footer}>
+            <PaymentProgress route={{params: {step: 2}}}/>
         </View>
-    )
+
+    </View>)
 }
 
 const styles = StyleSheet.create({
@@ -83,7 +104,6 @@ const styles = StyleSheet.create({
     },
     title: {
         marginTop: 15,
-        marginBottom: 5,
         fontSize: 24,
         fontWeight: 'bold',
         color: 'white',
@@ -133,9 +153,11 @@ const styles = StyleSheet.create({
         height: 20,
         borderRadius: 30,
         marginTop: 15,
-
         borderWidth: 2,
         borderColor: 'rgba(255,255,255,0.67)',
+    }, scrollView: {
+        marginTop: 10,
+        marginBottom: 15
     }
 });
 
