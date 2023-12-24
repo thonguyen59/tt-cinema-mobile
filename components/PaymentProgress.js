@@ -2,6 +2,8 @@ import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import React, {useEffect, useState} from "react";
 import {CheckBox} from "react-native-elements";
 import {useNavigation} from "@react-navigation/native";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function PaymentProgress({route, showtime, movie, seatsSelected}) {
     const navigation = useNavigation();
@@ -12,6 +14,26 @@ function PaymentProgress({route, showtime, movie, seatsSelected}) {
 
     const handleCheckboxToggle = () => {
         setChecked(!checked);
+    };
+
+    const handleBooking = async () => {
+        let userID = await AsyncStorage.getItem("userID")
+        const seatIDArr = seatsSelected.seatIDArr.map(str => Number(str));
+        seatsSelected.seatIDArr.forEach(e => {
+            Number(e)
+        })
+        var url = 'http://172.31.98.139:8080/seat/booking';
+        axios.patch(url, {
+            showtimeID: Number(showtime.id),
+            userID: Number(userID),
+            seatIDs: seatIDArr,
+            subtotal: subtotal
+        }).then(function (response) {
+            alert("booking successful.")
+            navigation.navigate('drawer')
+        }).catch(function (error) {
+            console.log(error.message);
+        });
     };
 
     useEffect(() => {
@@ -34,7 +56,13 @@ function PaymentProgress({route, showtime, movie, seatsSelected}) {
     }, []);
 
     const toStep2 = () => {
-        navigation.navigate('payment', {movie: movie, showtime: showtime, seatsSelected: seatsSelected, subtotal: subtotal, numOfSeats: numOfSeats});
+        navigation.navigate('payment', {
+            movie: movie,
+            showtime: showtime,
+            seatsSelected: seatsSelected,
+            subtotal: subtotal,
+            numOfSeats: numOfSeats
+        });
     };
 
     return (
@@ -70,7 +98,8 @@ function PaymentProgress({route, showtime, movie, seatsSelected}) {
 
                 </View>
 
-                <TouchableOpacity disabled={!checked} style={!checked ? styles.bookingDisableBtn : styles.bookingBtn}>
+                <TouchableOpacity onPress={handleBooking} disabled={!checked}
+                                  style={!checked ? styles.bookingDisableBtn : styles.bookingBtn}>
                     <Text style={styles.bookingTxt}>Finish Payment (2/2)</Text>
                 </TouchableOpacity>
             </View>}

@@ -17,10 +17,6 @@ function PaymentScreen({route}) {
         }
     }
 
-    useEffect(() => {
-        console.log(route.params.seatsSelected)
-    }, []);
-
     return (<View style={styles.container}>
         <Image source={{uri: route.params.movie.posterURL}} style={styles.trailer}/>
         <Text style={styles.title}>{route.params.movie.title}</Text>
@@ -75,7 +71,7 @@ function PaymentScreen({route}) {
         </ScrollView>
 
         <View style={styles.footer}>
-            <PaymentProgress route={{params: {step: 2}}}/>
+            <PaymentProgress movie={route.params.movie} showtime={route.params.showtime} seatsSelected={route.params.seatsSelected} route={{params: {step: 2}}}/>
         </View>
 
     </View>)

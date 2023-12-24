@@ -32,7 +32,7 @@ function ShowtimeScreen({route}) {
 
   const getData = () => {
     let movieID = route.params.movie.id;
-    var url = 'http://192.168.9.59:8080/showtime/movie/' + movieID;
+    var url = 'http://172.31.98.139:8080/showtime/movie/' + movieID;
     axios.get(url).then(function(response) {
       setData(response.data);
       // console.log('Call API get show times successfurl.');

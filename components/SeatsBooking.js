@@ -17,7 +17,7 @@ function SeatsBooking({ showtimeID, onSeatsSelectedChange}) {
 
 
   const getSeats = () => {
-    var url = 'http://192.168.9.59:8080/seat/' + showtimeID;
+    var url = 'http://172.31.98.139:8080/seat/' + showtimeID;
     axios.get(url).then(function(response) {
       setSeats(response.data);
       // console.log(response.data);
@@ -33,7 +33,7 @@ function SeatsBooking({ showtimeID, onSeatsSelectedChange}) {
   useEffect(() => {
     let vip = 0
     let double = 0
-    onSeatsSelectedChange({normalSeats: normalSeats, vipSeats: vipSeats, coupleSeats: coupleSeats});
+    onSeatsSelectedChange({normalSeats: normalSeats, vipSeats: vipSeats, coupleSeats: coupleSeats, seatIDArr: seatIDsSelected});
   }, [seatIDsSelected]);
 
   const rowHeaderRender = ({item}) => (

@@ -1,117 +1,124 @@
-import {StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {useState} from "react";
 
 const SignUpPage = ({navigation}) => {
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
-    const [passwordConfirm,setPasswordConfirm] = useState('')
-    const [email,setEmail] = useState('')
+    const [passwordConfirm, setPasswordConfirm] = useState('')
+    const [email, setEmail] = useState('')
 
-    const Register = ()=> {
-       
+    const Register = () => {
         if (!username) {
             alert('Please fill Username');
             return;
-          }
-          if (!password) {
+        }
+        if (!password) {
             alert('Please fill Password');
             return;
-          }
-          if (!(password === passwordConfirm)) {
+        }
+        if (!(password === passwordConfirm)) {
             alert('password 0 match!');
             return;
-          }
-          
-          fetch('http://192.168.163.1:8080/user/register', {
+        }
+
+        fetch('http://172.31.98.139:8080/user/register', {
             method: 'POST',
             body: JSON.stringify({
-              username: username,
-              password: password,
-              email : email
+                username: username,
+                password: password,
+                email: email
             }),
             headers: {
-              'Content-Type': 'application/json',
+                'Content-Type': 'application/json',
             },
-          }) 
+        })
             .then((response) => response.json())
             .then((responseJson) => {
-      
-               if(responseJson.status ==='fail' ) {
-                alert(responseJson.data);
-                console.log(responseJson.data)
-              }
-              if (responseJson.status === 'success') {
-                alert("Register success")
-                navigation.navigate('Login')  
-                console.log(responseJson.data);
-              } 
-              
+
+                if (responseJson.status === 'fail') {
+                    alert(responseJson.data);
+                    console.log(responseJson.data)
+                }
+                if (responseJson.status === 'success') {
+                    alert("Register success")
+                    navigation.navigate('Login')
+                    console.log(responseJson.data);
+                }
+
             })
             .catch((error) => {
-              console.error(error);
+                console.error(error);
             });
     }
 
-    return (<View style={styles.container}>
-        <View style={styles.titleContainer}>
-            <Text style={styles.title1}>Welcome</Text>
-            <Text style={styles.title2}>Sign Up</Text>
-        </View>
+    return (
+        <View style={styles.container}>
+            <ScrollView style={{height: '70%'}}>
+                <View style={styles.titleContainer}>
+                    <Text style={styles.title1}>Welcome</Text>
+                    <Text style={styles.title2}>Sign Up</Text>
+                </View>
 
-        <View style={styles.inputContainer}>
-            <Text style={styles.label}>Email</Text>
-            <TextInput
-                style={styles.input}
-                value={email}
-                onChangeText={setEmail}
-            />
-        </View>
+                <View style={styles.inputContainer}>
+                    <Text style={styles.label}>Email</Text>
+                    <TextInput
+                        style={styles.input}
+                        value={email}
+                        onChangeText={setEmail}
+                    />
+                </View>
 
-        <View style={styles.inputContainer}>
-            <Text style={styles.label}>Username</Text>
-            <TextInput
-                style={styles.input}
-                value={username}
-                onChangeText={setUserName}
-            />
-        </View>
+                <View style={styles.inputContainer}>
+                    <Text style={styles.label}>Username</Text>
+                    <TextInput
+                        style={styles.input}
+                        value={username}
+                        onChangeText={setUserName}
+                    />
+                </View>
 
-        <View style={styles.inputContainer}>
-            <Text style={styles.label}>Password</Text>
-            <TextInput
-                style={styles.input}
-                secureTextEntry={true}
-                value={password}
-                onChangeText={setPassword}
-            />
-        </View>
+                <View style={styles.inputContainer}>
+                    <Text style={styles.label}>Password</Text>
+                    <TextInput
+                        style={styles.input}
+                        secureTextEntry={true}
+                        value={password}
+                        onChangeText={setPassword}
+                    />
+                </View>
 
-        <View style={styles.inputContainer}>
-            <Text style={styles.label}>PasswordConfirm</Text>
-            <TextInput
-                style={styles.input}
-                secureTextEntry={true}
-                value={passwordConfirm}
-                onChangeText={setPasswordConfirm}
-            />
-        </View>
+                <View style={styles.inputContainer}>
+                    <Text style={styles.label}>PasswordConfirm</Text>
+                    <TextInput
+                        style={styles.input}
+                        secureTextEntry={true}
+                        value={passwordConfirm}
+                        onChangeText={setPasswordConfirm}
+                    />
+                </View>
 
-        <View style={styles.buttonContainer}>
-            <TouchableOpacity onPress={Register} style={styles.button}>
-                <Text style={{color: 'white'}}>Sign Up</Text>
-            </TouchableOpacity>
-        </View>
-
-    </View>)
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity onPress={Register} style={styles.button}>
+                        <Text style={styles.buttonText}>Sign Up</Text>
+                    </TouchableOpacity>
+                </View>
+            </ScrollView>
+        </View>)
 }
 
 const styles = StyleSheet.create({
     container: {
-        justifyContent: 'center',
         flex: 1,
-        backgroundColor: '#fff',
+        justifyContent: 'center',
+        alignItems: 'stretch',
+        backgroundColor: 'black',
         paddingHorizontal: 20,
-        paddingBottom: 250
+        paddingBottom: 10,
+    },
+    body: {
+        flex: 1, // Takes the available space, pushing the bottomView to the bottom
+        justifyContent: 'center',
+        paddingBottom: 150
     },
     titleContainer: {
         alignItems: 'left',
@@ -119,10 +126,12 @@ const styles = StyleSheet.create({
     },
     title1: {
         fontSize: 16,
+        color: 'white'
     },
     title2: {
         fontSize: 40,
         fontWeight: 'bold',
+        color: 'white',
     },
     inputContainer: {
         alignItems: 'left',
@@ -131,7 +140,8 @@ const styles = StyleSheet.create({
     label: {
         fontSize: 16,
         marginBottom: 5,
-        marginLeft: 1
+        marginLeft: 1,
+        color: 'white',
     },
     input: {
         height: 40,
@@ -140,7 +150,8 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         marginBottom: 20,
         borderRadius: 20,
-        width: '100%'
+        width: '100%',
+        color: 'white',
     },
     buttonContainer: {
         alignItems: 'center',
@@ -149,12 +160,20 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 20,
         paddingVertical: 12,
-        borderRadius: 20,
+        borderRadius: 10,
         elevation: 2,
-        backgroundColor: '#f159d8',
+        backgroundColor: '#16cc3c',
         width: '70%'
     },
-
+    buttonText: {
+        fontSize: 16,
+        color: 'white',
+        fontWeight: 'bold'
+    },
+    signUpLink: {
+        alignItems: 'flex-end',
+        justifyContent: 'flex-end',
+    },
 })
 
 export default SignUpPage

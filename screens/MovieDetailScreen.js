@@ -13,7 +13,7 @@ function MovieDetailScreen({route}) {
 
     const getMovieDetail = () => {
         let id = route.params.id;
-        var url = 'http://192.168.9.59:8080/movies/detail/' + id;
+        var url = 'http://172.31.98.139:8080/movies/detail/' + id;
         axios.get(url).then(function (response) {
             setMovie(response.data);
             let date = response.data.releaseDate.split('-');
@@ -29,7 +29,7 @@ function MovieDetailScreen({route}) {
             goToBooking()
         }
         getMovieDetail();
-        console.log('Call API Detail Success');
+        // console.log('Call API Detail Success');
     }, []);
 
     function goToBooking() {

@@ -23,7 +23,6 @@ function BottomTab() {
                 }
             }}>
 
-
             <Tab.Screen name="home" component={HomeScreen}
                 options={{
                     headerShown: false,
@@ -33,7 +32,6 @@ function BottomTab() {
                     ),
 
                 }}/>
-           
 
             <Tab.Screen name="store1" component={StoreScreen}
                 options={{
@@ -42,7 +40,6 @@ function BottomTab() {
                     tabBarIcon: ({ color }) => (
                         <FontAwesomeIcon icon={faFilm} color={color} size={26} />
                     )}} />
-             
 
             <Tab.Screen name="store" component={StoreScreen}
                 options={{
@@ -52,7 +49,6 @@ function BottomTab() {
                         <FontAwesomeIcon icon={faStore} color={color} size={26} />
                     )}} />
               
-
             <Tab.Screen name="personal" component={PersonalScreen}
                 options={{
                     headerShown: false,
@@ -60,9 +56,6 @@ function BottomTab() {
                     tabBarIcon: ({ color }) => (
                         <FontAwesomeIcon icon={faUser} color={color} size={22} />
                     )}} />
-             
-
-
         </Tab.Navigator>
     );
 }

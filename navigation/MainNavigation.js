@@ -1,12 +1,16 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import DrawerNavigation from './DrawerNavigation';
 import MovieDetailScreen from '../screens/MovieDetailScreen';
-import BottomTab from './BottomTab';
-import HomeScreen from '../screens/HomeScreen';
+
 import ShowtimeScreen from "../screens/ShowtimeScreen";
 import SeatsScreen from "../screens/SeatsScreen";
-import CinemaShowtimeDropdown from "../components/CinemaShowtimeDropdown";
 import PaymentScreen from "../screens/PaymentScreen";
+import SignUpPage from "../screens/user/SignUpPage";
+import SignInPage from "../screens/user/SignInPage";
+import PaymentHistoryScreen from "../screens/PaymentHistoryScreen";
+import PersonalScreen from "../screens/PersonalScreen";
+import ticketScreen from "../screens/TicketScreen";
+import TicketScreen from "../screens/TicketScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -33,6 +37,24 @@ function MainNavigation() {
                               title: 'Session Selection',
                           }}/>
             <Stack.Screen name="payment" component={PaymentScreen}
+                          options={{
+                              headerTitle: null,
+                              headerTransparent: true,
+                              title: ''
+                          }}/>
+            <Stack.Screen name="signIn" component={SignInPage}
+                          options={{
+                              headerTitle: null,
+                              headerTransparent: true,
+                              title: ''
+                          }}/>
+            <Stack.Screen name="history" component={PaymentHistoryScreen}
+                          options={{
+                              headerTitle: null,
+                              headerTransparent: true,
+                              title: ''
+                          }}/>
+            <Stack.Screen name="ticket" component={TicketScreen}
                           options={{
                               headerTitle: null,
                               headerTransparent: true,
