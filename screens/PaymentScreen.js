@@ -18,7 +18,7 @@ function PaymentScreen({route}) {
     }
 
     return (<View style={styles.container}>
-        <Image source={{uri: route.params.movie.posterURL}} style={styles.trailer}/>
+        <Image source={{uri: route.params.movie.posterHorizontalURL}} style={styles.trailer}/>
         <Text style={styles.title}>{route.params.movie.title}</Text>
 
         <ScrollView style={styles.scrollView}>
@@ -30,7 +30,7 @@ function PaymentScreen({route}) {
 
             <Text style={styles.label}>Item Ordered</Text>
 
-            {route.params.seatsSelected.normalSeats !== 0 && <View style={[styles.row, {marginTop: 5}]}>
+            {route.params.seatsSelected.normalSeats.length !== 0 && <View style={[styles.row, {marginTop: 5}]}>
                 <Text style={styles.content}>{route.params.seatsSelected.normalSeats.length} x Adult-NORMAL: {route.params.seatsSelected.normalSeats.join(",")}</Text>
                 <Text
                     style={styles.contentRight}>{route.params.seatsSelected.normal.toLocaleString('en-US')} đ</Text>

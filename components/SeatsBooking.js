@@ -18,7 +18,7 @@ function SeatsBooking({ showtimeID, onSeatsSelectedChange}) {
 
 
   const getSeats = () => {
-    var url = 'http://10.91.10.85:8080/seat/' + showtimeID;
+    var url = 'http://192.168.1.6:8080/seat/' + showtimeID;
     axios.get(url).then(function(response) {
       setSeats(response.data);
       // console.log(response.data);
@@ -60,12 +60,12 @@ function SeatsBooking({ showtimeID, onSeatsSelectedChange}) {
           if (index > -1) { // only splice array when item is found
             normalSeats.splice(index, 1); // 2nd parameter means remove one item only
           }
-        } else if (item.type === 'COUPLE') {
+        } else if (item.type === 'VIP') {
           const index = vipSeats.indexOf(item.row + item.number);
           if (index > -1) { // only splice array when item is found
             vipSeats.splice(index, 1); // 2nd parameter means remove one item only
           }
-        } else if (item.type === 'VIP') {
+        } else if (item.type === 'COUPLE') {
           const index = coupleSeats.indexOf(item.row + item.number);
           if (index > -1) { // only splice array when item is found
             coupleSeats.splice(index, 1); // 2nd parameter means remove one item only
@@ -75,9 +75,9 @@ function SeatsBooking({ showtimeID, onSeatsSelectedChange}) {
       } else {
         if (item.type === 'NORMAL') {
           normalSeats.push(item.row + item.number)
-        } else if (item.type === 'COUPLE') {
-          vipSeats.push(item.row + item.number)
         } else if (item.type === 'VIP') {
+          vipSeats.push(item.row + item.number)
+        } else if (item.type === 'COUPLE') {
           coupleSeats.push(item.row + item.number)
         }
         return [...prevSelectedSeats, item.id];

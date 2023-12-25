@@ -16,9 +16,9 @@ const MovieShowingCarousel = ({data}) => {
     const scrollViewRef = useAnimatedRef(null);
     const interval = useRef();
     const [newData] = useState([
-        {key: 'spacer-left', posterURL: '', title: '', time: ''},
+        {key: 'spacer-left', posterURL: '', posterHorizontalURL: '', title: '', time: ''},
         ...data,
-        {key: 'spacer-right', posterURL: '', title: '', time: ''},
+        {key: 'spacer-right', posterURL: '', posterHorizontalURL: '', title: '', time: ''},
     ]);
     const navigation = useNavigation();
     const {width} = useWindowDimensions();
@@ -133,7 +133,9 @@ const styles = StyleSheet.create({
         aspectRatio: 6 / 9,
     },
     title: {
-        marginTop: 5
+        marginTop: 6,
+        width: '75%',
+        alignSelf: 'center'
     },
     bookingBtn: {
         flexDirection: 'row',

@@ -100,7 +100,9 @@ const styles = StyleSheet.create({
         aspectRatio: 6 / 9,
     },
     title: {
-        marginTop: 5
+        marginTop: 6,
+        width: '75%',
+        alignSelf: 'center'
     },
     bookingBtn: {
         flexDirection: 'row',

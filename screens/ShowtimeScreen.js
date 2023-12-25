@@ -32,7 +32,7 @@ function ShowtimeScreen({route}) {
 
   const getData = () => {
     let movieID = route.params.movie.id;
-    var url = 'http://10.91.10.85:8080/showtime/movie/' + movieID;
+    var url = 'http://192.168.1.6:8080/showtime/movie/' + movieID;
     axios.get(url).then(function(response) {
       setData(response.data);
       // console.log('Call API get show times successfurl.');
@@ -121,9 +121,15 @@ function ShowtimeScreen({route}) {
     const cinemaResult = [];
 
     cinemaTemp.forEach(e => {
-      let temp = cinemaResult.findIndex((d) => d.name === e.name);
-      if (temp) {
-        cinemaResult.push(e);
+      const isFound = cinemaResult.some(element => {
+        if (element.name === e.name) {
+          return true;
+        }
+        return false;
+      });
+
+      if (!isFound) {
+        cinemaResult.push(e)
       }
     });
 
