@@ -5,7 +5,7 @@ import {useNavigation} from "@react-navigation/native";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-function PaymentProgress({route, showtime, movie, seatsSelected}) {
+function PaymentProgress({route, showtime, movie, seatsSelected, paymentMethod}) {
     const navigation = useNavigation();
     const [step, setStep] = useState(1)
     const [checked, setChecked] = useState(false);
@@ -14,6 +14,8 @@ function PaymentProgress({route, showtime, movie, seatsSelected}) {
 
     const handleCheckboxToggle = () => {
         setChecked(!checked);
+        console.log(paymentMethod)
+        console.log(!checked && paymentMethod)
     };
 
     const handleBooking = async () => {
@@ -22,7 +24,7 @@ function PaymentProgress({route, showtime, movie, seatsSelected}) {
         seatsSelected.seatIDArr.forEach(e => {
             Number(e)
         })
-        var url = 'http://172.31.98.139:8080/seat/booking';
+        var url = 'http://10.91.10.85:8080/seat/booking';
         axios.patch(url, {
             showtimeID: Number(showtime.id),
             userID: Number(userID),
@@ -38,14 +40,19 @@ function PaymentProgress({route, showtime, movie, seatsSelected}) {
 
     useEffect(() => {
         if (showtime) {
-            let normal = showtime.price * seatsSelected.normalSeats
-            let vip = (showtime.price + 15000) * seatsSelected.vipSeats
-            let couple = (showtime.price * 2 + 10000) * seatsSelected.coupleSeats
+            let numOfNormal = seatsSelected.normalSeats !== undefined ? seatsSelected.normalSeats.length : 0
+            let numOfVip = seatsSelected.vipSeats !== undefined ? seatsSelected.vipSeats.length : 0
+            let numOfCouple = seatsSelected.coupleSeats !== undefined ? seatsSelected.coupleSeats.length : 0
+
+            let normal = showtime.price * numOfNormal
+            let vip = (showtime.price + 15000) * numOfVip
+            let couple = (showtime.price * 2 + 10000) * numOfCouple
             setSubtotal(normal + vip + couple)
             seatsSelected.normal = normal
             seatsSelected.vip = vip
             seatsSelected.couple = couple
-            setNumOfSeats(seatsSelected.normalSeats + seatsSelected.vipSeats + seatsSelected.coupleSeats)
+
+            setNumOfSeats(numOfNormal + numOfVip + numOfCouple)
         }
     }, [seatsSelected]);
 
@@ -61,7 +68,7 @@ function PaymentProgress({route, showtime, movie, seatsSelected}) {
             showtime: showtime,
             seatsSelected: seatsSelected,
             subtotal: subtotal,
-            numOfSeats: numOfSeats
+            numOfSeats: numOfSeats,
         });
     };
 
@@ -98,8 +105,8 @@ function PaymentProgress({route, showtime, movie, seatsSelected}) {
 
                 </View>
 
-                <TouchableOpacity onPress={handleBooking} disabled={!checked}
-                                  style={!checked ? styles.bookingDisableBtn : styles.bookingBtn}>
+                <TouchableOpacity onPress={handleBooking} disabled={!checked && !paymentMethod}
+                                  style={(checked && paymentMethod) ? styles.bookingBtn : styles.bookingDisableBtn}>
                     <Text style={styles.bookingTxt}>Finish Payment (2/2)</Text>
                 </TouchableOpacity>
             </View>}

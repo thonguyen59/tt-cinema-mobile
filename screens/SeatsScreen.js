@@ -28,7 +28,7 @@ function SeatsScreen({route}) {
             <Text style={styles.header}>{route.params.title}</Text>
             <Text
                 style={styles.subHeader}>Screen {route.params.showtime.screen} - {startTime.getDate()} tháng {startTime.getMonth() +
-                1}, {startTime.getFullYear()} {startTime.getHours()}:{startTime.getMinutes()} - {endTime.getHours()}:{endTime.getMinutes()}</Text>
+                1}, {startTime.getFullYear()} {(startTime.getHours() < 10 ? '0' : '')}{startTime.getHours()}:{(startTime.getMinutes() < 10 ? '0' : '')}{startTime.getMinutes()} - {endTime.getHours()}:{endTime.getMinutes()}</Text>
             <View style={styles.line}/>
             <Text style={[styles.text, {alignSelf: 'center', fontWeight: 'bold'}]}>SCREEN</Text>
             <View style={{marginTop: 10}}>

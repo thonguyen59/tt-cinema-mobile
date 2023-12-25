@@ -8,8 +8,6 @@ import PaymentScreen from "../screens/PaymentScreen";
 import SignUpPage from "../screens/user/SignUpPage";
 import SignInPage from "../screens/user/SignInPage";
 import PaymentHistoryScreen from "../screens/PaymentHistoryScreen";
-import PersonalScreen from "../screens/PersonalScreen";
-import ticketScreen from "../screens/TicketScreen";
 import TicketScreen from "../screens/TicketScreen";
 
 const Stack = createNativeStackNavigator();
@@ -46,8 +44,14 @@ function MainNavigation() {
                           options={{
                               headerTitle: null,
                               headerTransparent: true,
-                              title: ''
+                              title: '',
                           }}/>
+          <Stack.Screen name="signUp" component={SignUpPage}
+                        options={{
+                          headerTitle: null,
+                          headerTransparent: true,
+                          title: '',
+                        }}/>
             <Stack.Screen name="history" component={PaymentHistoryScreen}
                           options={{
                               headerTitle: null,

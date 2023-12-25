@@ -21,7 +21,7 @@ const SignUpPage = ({navigation}) => {
             return;
         }
 
-        fetch('http://172.31.98.139:8080/user/register', {
+        fetch('http://10.91.10.85:8080/user/register', {
             method: 'POST',
             body: JSON.stringify({
                 username: username,
@@ -41,7 +41,7 @@ const SignUpPage = ({navigation}) => {
                 }
                 if (responseJson.status === 'success') {
                     alert("Register success")
-                    navigation.navigate('Login')
+                    navigation.navigate('signIn')
                     console.log(responseJson.data);
                 }
 
@@ -53,7 +53,7 @@ const SignUpPage = ({navigation}) => {
 
     return (
         <View style={styles.container}>
-            <ScrollView style={{height: '70%'}}>
+            <ScrollView style={{height: '70%', marginTop: 80}}>
                 <View style={styles.titleContainer}>
                     <Text style={styles.title1}>Welcome</Text>
                     <Text style={styles.title2}>Sign Up</Text>
@@ -88,7 +88,7 @@ const SignUpPage = ({navigation}) => {
                 </View>
 
                 <View style={styles.inputContainer}>
-                    <Text style={styles.label}>PasswordConfirm</Text>
+                    <Text style={styles.label}>Confirm Password</Text>
                     <TextInput
                         style={styles.input}
                         secureTextEntry={true}
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         paddingLeft: 10,
         marginBottom: 20,
-        borderRadius: 20,
+        borderRadius: 10,
         width: '100%',
         color: 'white',
     },

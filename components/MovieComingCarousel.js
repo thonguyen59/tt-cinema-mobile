@@ -8,8 +8,6 @@ import Animated, {
     useAnimatedRef,
 } from 'react-native-reanimated';
 import TitleMovie from './TitleMovie';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faTicket} from '@fortawesome/free-solid-svg-icons';
 import {useNavigation} from "@react-navigation/native";
 
 const MovieComingCarousel = ({data}) => {
@@ -34,7 +32,7 @@ const MovieComingCarousel = ({data}) => {
     });
 
     const goToDetails = (id) => {
-        navigation.navigate('movieDetail', {id: id});
+        navigation.navigate('movieDetail', {id: id, enable: false});
     };
 
     useEffect(() => {

@@ -34,7 +34,7 @@ const MovieShowingCarousel = ({data}) => {
     });
 
     const goToDetails = (id) => {
-        navigation.navigate('movieDetail', {id: id});
+        navigation.navigate('movieDetail', {id: id, enable: true});
     };
 
     const goBooking = (index) => {
@@ -125,10 +125,8 @@ const styles = StyleSheet.create({
         width: '90%',
     },
     itemContainer: {
-
         zIndex: 2,
     },
-
     image: {
         width: '100%',
         height: undefined,

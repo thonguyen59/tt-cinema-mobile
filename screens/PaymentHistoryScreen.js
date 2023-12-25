@@ -19,7 +19,7 @@ function PaymentHistoryScreen() {
         let startDate = new Date(item.showDate)
         let endDate = new Date(item.endTime)
         let date = startDate.getDate() + ' tháng ' + (startDate.getMonth() + 1) + ', ' + startDate.getFullYear()
-        let time =  startDate.getHours() + ':' + endDate.getMinutes() + ' - ' + endDate.getHours() + ':' + endDate.getMinutes()
+        let time = (startDate.getHours() < 10 ? '0' : '') + startDate.getHours() + ':' + (endDate.getMinutes() < 10 ? '0' : '') + endDate.getMinutes() + ' - ' + (endDate.getHours() < 10 ? '0' : '') + endDate.getHours() + ':' + (endDate.getMinutes() < 10 ? '0' : '') + endDate.getMinutes()
         setDate(date)
         setTime(time)
         return (
@@ -47,7 +47,7 @@ function PaymentHistoryScreen() {
 
     const getTickets = async () => {
         let userID = await AsyncStorage.getItem("userID")
-        var url = 'http://172.31.98.139:8080/ticket/history-payment/' + userID;
+        var url = 'http://10.91.10.85:8080/ticket/history-payment/' + userID;
         axios.get(url).then(function (response) {
             setTickets(response.data);
         }).catch(function (error) {

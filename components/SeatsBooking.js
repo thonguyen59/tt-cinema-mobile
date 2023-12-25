@@ -11,13 +11,14 @@ function SeatsBooking({ showtimeID, onSeatsSelectedChange}) {
   const rowHeader = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K'];
   const [seats, setSeats] = useState([]);
   const [seatIDsSelected, setSeatIDsSelected] = useState([]);
-  const [normalSeats, setNormalSeats] = useState(0);
-  const [vipSeats, setVIPSeats] =  useState(0);
-  const [coupleSeats, setCoupleSeats] =  useState(0);
+  const [seatsNameSelected, setSeatsNameSelected] = useState('');
+  const [normalSeats, setNormalSeats] = useState([]);
+  const [vipSeats, setVIPSeats] =  useState([]);
+  const [coupleSeats, setCoupleSeats] =  useState([]);
 
 
   const getSeats = () => {
-    var url = 'http://172.31.98.139:8080/seat/' + showtimeID;
+    var url = 'http://10.91.10.85:8080/seat/' + showtimeID;
     axios.get(url).then(function(response) {
       setSeats(response.data);
       // console.log(response.data);
@@ -31,9 +32,10 @@ function SeatsBooking({ showtimeID, onSeatsSelectedChange}) {
   }, []);
 
   useEffect(() => {
-    let vip = 0
-    let double = 0
-    onSeatsSelectedChange({normalSeats: normalSeats, vipSeats: vipSeats, coupleSeats: coupleSeats, seatIDArr: seatIDsSelected});
+    let filteredArray = seats.filter(item => seatIDsSelected.includes(item.id));
+    let seatNames = filteredArray.join(",")
+
+    onSeatsSelectedChange({normalSeats: normalSeats, vipSeats: vipSeats, coupleSeats: coupleSeats, seatIDArr: seatIDsSelected, seatNames: seatNames});
   }, [seatIDsSelected]);
 
   const rowHeaderRender = ({item}) => (
@@ -54,20 +56,29 @@ function SeatsBooking({ showtimeID, onSeatsSelectedChange}) {
     setSeatIDsSelected((prevSelectedSeats) => {
       if (prevSelectedSeats.includes(item.id)) {
         if (item.type === 'NORMAL') {
-          setNormalSeats(normalSeats - 1)
+          const index = normalSeats.indexOf(item.row + item.number);
+          if (index > -1) { // only splice array when item is found
+            normalSeats.splice(index, 1); // 2nd parameter means remove one item only
+          }
         } else if (item.type === 'COUPLE') {
-          setCoupleSeats(coupleSeats - 1)
+          const index = vipSeats.indexOf(item.row + item.number);
+          if (index > -1) { // only splice array when item is found
+            vipSeats.splice(index, 1); // 2nd parameter means remove one item only
+          }
         } else if (item.type === 'VIP') {
-          setVIPSeats(vipSeats - 1)
+          const index = coupleSeats.indexOf(item.row + item.number);
+          if (index > -1) { // only splice array when item is found
+            coupleSeats.splice(index, 1); // 2nd parameter means remove one item only
+          }
         }
         return prevSelectedSeats.filter((seatId) => seatId !== item.id);
       } else {
         if (item.type === 'NORMAL') {
-          setNormalSeats(normalSeats + 1)
+          normalSeats.push(item.row + item.number)
         } else if (item.type === 'COUPLE') {
-          setCoupleSeats(coupleSeats + 1)
+          vipSeats.push(item.row + item.number)
         } else if (item.type === 'VIP') {
-          setVIPSeats(vipSeats + 1)
+          coupleSeats.push(item.row + item.number)
         }
         return [...prevSelectedSeats, item.id];
       }

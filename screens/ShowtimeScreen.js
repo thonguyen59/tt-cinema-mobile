@@ -32,7 +32,7 @@ function ShowtimeScreen({route}) {
 
   const getData = () => {
     let movieID = route.params.movie.id;
-    var url = 'http://172.31.98.139:8080/showtime/movie/' + movieID;
+    var url = 'http://10.91.10.85:8080/showtime/movie/' + movieID;
     axios.get(url).then(function(response) {
       setData(response.data);
       // console.log('Call API get show times successfurl.');
@@ -48,7 +48,7 @@ function ShowtimeScreen({route}) {
       let id = date.getDate().toString() + date.getMonth().toString();
 
       if (id === dateSelected && e.cinema.location === locationSelected && e.cinema.name === cinemaName) {
-        e.time = date.getHours().toString() + ':' + date.getMinutes().toString();
+        e.time = (date.getHours() < 10 ? '0' : '') + date.getHours().toString() + ':' + (date.getMinutes() < 10 ? '0' : '') + date.getMinutes().toString();
         showtimes.push(e);
       }
     });
@@ -168,7 +168,7 @@ function ShowtimeScreen({route}) {
       </View>);
 
   return (<View style={styles.container}>
-        <Image source={{uri: route.params.movie.posterURL}} style={styles.poster}/>
+        <Image source={{uri: route.params.movie.posterHorizontalURL}} style={styles.poster}/>
         <View style={styles.bodyContainer}>
           <Text style={styles.title}>{route.params.movie.title}</Text>
           <Text style={{color: 'rgba(255,255,255,0.67)', fontSize: 16}}>{route.params.movie.time} phút</Text>
@@ -246,15 +246,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 0,
     backgroundColor: '#6FAA35',
-  }, cinema: {
-    borderWidth: 1,
-    marginLeft: -1,
-    marginRight: -1,
-    borderColor: 'rgba(255,255,255,0.67)',
-    paddingStart: 10,
-    paddingVertical: 10,
-  }, cinemaText: {
-    color: 'white', fontSize: 20,
   },
 });
 

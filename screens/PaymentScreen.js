@@ -31,19 +31,19 @@ function PaymentScreen({route}) {
             <Text style={styles.label}>Item Ordered</Text>
 
             {route.params.seatsSelected.normalSeats !== 0 && <View style={[styles.row, {marginTop: 5}]}>
-                <Text style={styles.content}>{route.params.seatsSelected.normalSeats} x Adult-NORMAL: E7</Text>
+                <Text style={styles.content}>{route.params.seatsSelected.normalSeats.length} x Adult-NORMAL: {route.params.seatsSelected.normalSeats.join(",")}</Text>
                 <Text
                     style={styles.contentRight}>{route.params.seatsSelected.normal.toLocaleString('en-US')} đ</Text>
             </View>}
 
-            {route.params.seatsSelected.vipSeats !== 0 && <View style={[styles.row, {marginTop: 5}]}>
-                <Text style={styles.content}>{route.params.seatsSelected.vipSeats} x Adult-VIP: E7</Text>
+            {route.params.seatsSelected.vipSeats.length !== 0 && <View style={[styles.row, {marginTop: 5}]}>
+                <Text style={styles.content}>{route.params.seatsSelected.vipSeats.length} x Adult-VIP: {route.params.seatsSelected.vipSeats.join(",")}</Text>
                 <Text
                     style={styles.contentRight}>{route.params.seatsSelected.vip.toLocaleString('en-US')} đ</Text>
             </View>}
 
-            {route.params.seatsSelected.coupleSeats !== 0 && <View style={[styles.row, {marginTop: 5}]}>
-                <Text style={styles.content}>{route.params.seatsSelected.coupleSeats} x Adult-COUPLE: E7</Text>
+            {route.params.seatsSelected.coupleSeats.length !== 0 && <View style={[styles.row, {marginTop: 5}]}>
+                <Text style={styles.content}>{route.params.seatsSelected.coupleSeats.length} x Adult-COUPLE: {route.params.seatsSelected.coupleSeats.join(",")}</Text>
                 <Text
                     style={styles.contentRight}>{route.params.seatsSelected.couple.toLocaleString('en-US')} đ</Text>
             </View>}
@@ -71,7 +71,7 @@ function PaymentScreen({route}) {
         </ScrollView>
 
         <View style={styles.footer}>
-            <PaymentProgress movie={route.params.movie} showtime={route.params.showtime} seatsSelected={route.params.seatsSelected} route={{params: {step: 2}}}/>
+            <PaymentProgress movie={route.params.movie} showtime={route.params.showtime} seatsSelected={route.params.seatsSelected} route={{params: {step: 2}}} paymentMethod={zaloPay || momo}/>
         </View>
 
     </View>)
