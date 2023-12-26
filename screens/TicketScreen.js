@@ -13,7 +13,9 @@ function TicketScreen({route}) {
         <Text style={styles.header}>Item Ordered</Text>
         <View style={styles.ticket}>
           <View style={styles.qr}>
-            <Image style={styles.image} source={require('../assets/images/qr.png')}/>
+            {/*<Image style={styles.image} source={require('../assets/images/10.91.10.85.png')}/>*/}
+            <Image style={{width: 100, height: 50, borderColor: 'red'}}
+                   source={{uri: `data:image/png;base64,${ticket.qrCode}`}}/>
           </View>
           <Text style={[styles.text, {fontWeight: 'bold', alignSelf: 'center', marginTop: 10}]}>Scan QR Code To
             Enter The Theatre</Text>
