@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
         aspectRatio: 6 / 9,
     },
     title: {
-        marginTop: 6,
+        marginTop: 5,
         width: '75%',
         alignSelf: 'center'
     },

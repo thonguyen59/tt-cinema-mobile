@@ -13,8 +13,7 @@ function TicketScreen({route}) {
         <Text style={styles.header}>Item Ordered</Text>
         <View style={styles.ticket}>
           <View style={styles.qr}>
-            {/*<Image style={styles.image} source={require('../assets/images/10.91.10.85.png')}/>*/}
-            <Image style={{width: 100, height: 50, borderColor: 'red'}}
+            <Image style={{width: 220, height: 220, borderColor: 'red', marginBottom: 20}}
                    source={{uri: `data:image/png;base64,${ticket.qrCode}`}}/>
           </View>
           <Text style={[styles.text, {fontWeight: 'bold', alignSelf: 'center', marginTop: 10}]}>Scan QR Code To

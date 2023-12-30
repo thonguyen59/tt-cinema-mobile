@@ -26,7 +26,7 @@ function PaymentHistoryScreen() {
             <View style={styles.item}>
                 <TouchableOpacity onPress={() => goToTicket(item)}>
                     <View style={styles.row}>
-                        <View style={{width: 100}}>
+                        <View style={{width: 100, justifyContent: 'center'}}>
                             <Image  source={{uri: item.posterURL}} style={styles.image}/>
                         </View>
                         <View style={styles.column}>
@@ -47,7 +47,7 @@ function PaymentHistoryScreen() {
 
     const getTickets = async () => {
         let userID = await AsyncStorage.getItem("userID")
-        var url = 'http://192.168.1.6:8080/ticket/history-payment/' + userID;
+        var url = 'http://172.16.4.238:8080/ticket/history-payment/' + userID;
         axios.get(url).then(function (response) {
             setTickets(response.data);
         }).catch(function (error) {
@@ -94,9 +94,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     column: {
+        justifyContent: 'center',
         flexDirection: 'column',
-        paddingVertical: 20,
-        marginLeft: 15
+        marginLeft: 15,
+        width: '70%'
     },
     line: {
         marginVertical: 10,

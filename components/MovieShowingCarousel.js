@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
         aspectRatio: 6 / 9,
     },
     title: {
-        marginTop: 6,
+        marginTop: 5,
         width: '75%',
         alignSelf: 'center'
     },
@@ -159,8 +159,8 @@ const styles = StyleSheet.create({
     fluent: {
         position: 'absolute',
         transform: [
-            {translateX: 120},
-            {translateY: 425},
+            {translateX: 115},
+            {translateY: 450},
         ],
         zIndex: 1,
     },
@@ -171,31 +171,10 @@ const styles = StyleSheet.create({
     },
     visible: {
         transform: [
-            {translateX: 50},
-            {translateY: 425},
+            {translateX: 43},
+            {translateY: 450},
         ],
         position: 'absolute',
         zIndex: 2,
     },
-    // visible: {
-    //     transform: [
-    //         {translateX: 33},
-    //         {translateY: 410},
-    //     ],
-    //     position: 'absolute',
-    //     zIndex: 2,
-    // },
-    // visibleBtn: {
-    //     // backgroundColor: 'red',
-    //     height: 40,
-    //     paddingRight: 166,
-    // },
-    // fluent: {
-    //     position: 'absolute',
-    //     transform: [
-    //         {translateX: 100},
-    //         {translateY: 410},
-    //     ],
-    //     zIndex: 1,
-    // },
 });

@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
     alignItems: 'center', // Center children horizontally
   },
   title: {
+    textAlign: 'center',
     fontSize: 18,
     fontWeight: 'bold',
     color: 'gray',
