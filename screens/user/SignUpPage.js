@@ -21,7 +21,7 @@ const SignUpPage = ({navigation}) => {
             return;
         }
 
-        fetch('http://172.16.4.238:8080/user/register', {
+        fetch('http://172.16.3.239:8080/user/register', {
             method: 'POST',
             body: JSON.stringify({
                 username: username,

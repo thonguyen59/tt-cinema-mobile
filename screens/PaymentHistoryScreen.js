@@ -47,7 +47,7 @@ function PaymentHistoryScreen() {
 
     const getTickets = async () => {
         let userID = await AsyncStorage.getItem("userID")
-        var url = 'http://172.16.4.238:8080/ticket/history-payment/' + userID;
+        var url = 'http://172.16.3.239:8080/ticket/history-payment/' + userID;
         axios.get(url).then(function (response) {
             setTickets(response.data);
         }).catch(function (error) {

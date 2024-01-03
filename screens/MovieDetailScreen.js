@@ -13,7 +13,7 @@ function MovieDetailScreen({route}) {
 
     const getMovieDetail = () => {
         let id = route.params.id;
-        var url = 'http://172.16.4.238:8080/movies/detail/' + id;
+        var url = 'http://172.16.3.239:8080/movies/detail/' + id;
         axios.get(url).then(function (response) {
             setMovie(response.data);
             let date = response.data.releaseDate.split('-');

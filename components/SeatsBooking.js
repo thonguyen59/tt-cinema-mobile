@@ -18,7 +18,7 @@ function SeatsBooking({ showtimeID, onSeatsSelectedChange}) {
 
 
   const getSeats = () => {
-    var url = 'http://172.16.4.238:8080/seat/' + showtimeID;
+    var url = 'http://172.16.3.239:8080/seat/' + showtimeID;
     axios.get(url).then(function(response) {
       setSeats(response.data);
       // console.log(response.data);

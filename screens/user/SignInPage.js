@@ -26,7 +26,7 @@ const SignInPage = ({navigation}) => {
       return;
     }
 
-    fetch('http://172.16.4.238:8080/user/login', {
+    fetch('http://172.16.3.239:8080/user/login', {
       method: 'POST',
       body: JSON.stringify({
         username: username,

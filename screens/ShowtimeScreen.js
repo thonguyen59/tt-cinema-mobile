@@ -31,7 +31,7 @@ function ShowtimeScreen({route}) {
 
     const getData = () => {
         let movieID = route.params.movie.id;
-        var url = 'http://172.16.4.238:8080/showtime/movie/' + movieID;
+        var url = 'http://172.16.3.239:8080/showtime/movie/' + movieID;
         axios.get(url).then(function (response) {
             setData(response.data);
             // console.log('Call API get show times successfurl.');
@@ -201,16 +201,13 @@ function ShowtimeScreen({route}) {
         </View>
 
 
-        <ScrollView showsHorizontalScrollIndicator={false}
-                    style={{marginTop: 20}} horizontal={true}>
-            <View style={{width: '100%'}}>
-                <FlatList
-                    data={cinemas}
-                    renderItem={renderShowtime}
-                    keyExtractor={(item) => item.name}
-                />
-            </View>
-        </ScrollView>
+        <View style={{width: '100%'}}>
+            <FlatList
+                data={cinemas}
+                renderItem={renderShowtime}
+                keyExtractor={(item) => item.name}
+            />
+        </View>
 
     </View>);
 }

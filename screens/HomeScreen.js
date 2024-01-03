@@ -11,7 +11,7 @@ function HomeScreen({navigation}) {
     const [moviesComing, setMoviesComing] = useState([])
 
     const getMoviesShowing = () => {
-        axios.get('http://172.16.4.238:8080/movies/enable').then(function(response) {
+        axios.get('http://172.16.3.239:8080/movies/enable').then(function(response) {
             let arr = [];
             response.data.forEach(e => {
                 arr.push({id: e.id, posterURL: e.posterURL, posterHorizontalURL: e.posterHorizontalURL,  title: e.title, time: e.time});
@@ -23,7 +23,7 @@ function HomeScreen({navigation}) {
     };
 
     const getMoviesComing = () => {
-        axios.get('http://172.16.4.238:8080/movies/coming-soon').then(function(response) {
+        axios.get('http://172.16.3.239:8080/movies/coming-soon').then(function(response) {
             let arr = [];
             response.data.forEach(e => {
                 arr.push({id: e.id, posterURL: e.posterURL, title: e.title, time: e.time});

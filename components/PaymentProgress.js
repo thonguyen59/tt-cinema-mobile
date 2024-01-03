@@ -24,7 +24,7 @@ function PaymentProgress({route, showtime, movie, seatsSelected, paymentMethod})
         seatsSelected.seatIDArr.forEach(e => {
             Number(e)
         })
-        var url = 'http://172.16.4.238:8080/seat/booking';
+        var url = 'http://172.16.3.239:8080/seat/booking';
         axios.patch(url, {
             showtimeID: Number(showtime.id),
             userID: Number(userID),
